@@ -19,7 +19,6 @@ mv /home/ubuntu/Prevent-OCI-Deletion-for-being-idle-master $TARGET_DIR
 rm repo.zip
 
 # Set up cron
-# Note: This will override any previous cron tasks set up for the script
 # Backup the crontab first
 crontab -l > cron_backup.txt
 
@@ -28,9 +27,8 @@ if grep -q "startPointlessProcesses.sh" cron_backup.txt; then
     echo "Cron task already exists. Skipping..."
 else
     echo "Cron task does not exist. Adding..."
+    # Add the cron task without overwriting
+    (crontab -l; echo "* * * * * /bin/bash $TARGET_DIR/startPointlessProcesses.sh >> $TARGET_DIR/log/trackPointlessWork.log 2>&1") | crontab -
 fi
-
-# Add the cron task
-echo "* * * * * /bin/bash $TARGET_DIR/startPointlessProcesses.sh >> $TARGET_DIR/log/trackPointlessWork.log 2>&1" | crontab -
 
 echo "Setup complete!"
