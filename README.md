@@ -185,6 +185,12 @@ Once you've ensured that the unwanted processes are terminated:
 
 > **Caution**: Always exercise caution when using the `kill` command, especially with the `-9` option. It forcibly terminates processes and can inadvertently affect essential system processes if misused.
 
+## Platform Compatibility
+
+These scripts have been specifically designed and tested on Ubuntu 22.04 instances. Before using them, ensure you are running an instance with Ubuntu 22.04, as the commands, package references, and script behaviors might differ in other distributions or versions.
+
+If you are interested in adapting these scripts for other operating systems, distributions, or different Ubuntu versions, you might need to adjust command syntax, package management commands, and potentially other system-specific details.
+
 ## Tips
 
 * If you are uncertain about the effect of changes you make, test them in a controlled environment before deploying them on your main instance.
