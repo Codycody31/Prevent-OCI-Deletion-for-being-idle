@@ -103,6 +103,78 @@ To control the CPU usage, you might want to adjust the manager script. Here's a 
   echo "Script activated at $(date) due to low CPU load." >> /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
   ```
 
+Certainly! Let's integrate this into the README as a section on troubleshooting:
+
+---
+
+## Troubleshooting: Stopping Rogue Script Instances
+
+If you've disabled the script from executing via `crontab`, but notice that the script (or its associated processes) are still consuming excessive CPU resources, it's possible that some instances of the script or its children are still running. Here's how you can identify and terminate such processes:
+
+### Identifying Running Scripts
+
+   **Check for the manager script** (`startPointlessProcesses.sh`):
+
+    ```bash
+    pgrep -f startPointlessProcesses.sh
+    ```
+    
+    This will display the process IDs of any instances of `startPointlessProcesses.sh` that are currently active.
+
+2. **Inspect for the CPU wastage script** (`cpuUser.sh`):
+
+    ```bash
+    pgrep -f cpuUser.sh
+    ```
+
+    If this script is active, you'll see its process IDs.
+
+### Terminating the Scripts
+
+1. **Terminate `startPointlessProcesses.sh` instances**:
+
+    ```bash
+    pkill -f startPointlessProcesses.sh
+    ```
+
+2. **Terminate `cpuUser.sh` instances**:
+
+    ```bash
+    pkill -f cpuUser.sh
+    ```
+
+### Verification
+
+After initiating the kill commands:
+
+1. **Recheck for `startPointlessProcesses.sh`**:
+
+    ```bash
+    pgrep -f startPointlessProcesses.sh
+    ```
+
+    Ensure no process IDs are listed. If there are, manually terminate them:
+
+    ```bash
+    kill -9 <PID>
+    ```
+
+    Replace `<PID>` with the lingering process ID.
+
+2. **Recheck for `cpuUser.sh`**:
+
+    ```bash
+    pgrep -f cpuUser.sh
+    ```
+
+### Monitoring
+
+Once you've ensured that the unwanted processes are terminated:
+
+* **Monitor the system's CPU usage** with tools such as `top` or `htop` to confirm that CPU utilization is back to normal.
+
+> **Caution**: Always exercise caution when using the `kill` command, especially with the `-9` option. It forcibly terminates processes and can inadvertently affect essential system processes if misused.
+
 ## Tips
 
 * If you are uncertain about the effect of changes you make, test them in a controlled environment before deploying them on your main instance.
