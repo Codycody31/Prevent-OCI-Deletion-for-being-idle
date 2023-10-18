@@ -113,35 +113,35 @@ If you've disabled the script from executing via `crontab`, but notice that the 
 
 ### Identifying Running Scripts
 
-   **Check for the manager script** (`startPointlessProcesses.sh`):
+1. **Check for the manager script** (`startPointlessProcesses.sh`):
 
-    ```bash
-    pgrep -f startPointlessProcesses.sh
-    ```
+   ```bash
+   pgrep -f startPointlessProcesses.sh
+   ```
 
-    This will display the process IDs of any instances of `startPointlessProcesses.sh` that are currently active.
+   This will display the process IDs of any instances of `startPointlessProcesses.sh` that are currently active.
 
 2. **Inspect for the CPU wastage script** (`cpuUser.sh`):
 
-    ```bash
-    pgrep -f cpuUser.sh
-    ```
+   ```bash
+   pgrep -f cpuUser.sh
+   ```
 
-    If this script is active, you'll see its process IDs.
+   If this script is active, you'll see its process IDs.
 
 ### Terminating the Scripts
 
 1. **Terminate `startPointlessProcesses.sh` instances**:
 
-    ```bash
-    pkill -f startPointlessProcesses.sh
-    ```
+   ```bash
+   pkill -f startPointlessProcesses.sh
+   ```
 
 2. **Terminate `cpuUser.sh` instances**:
 
-    ```bash
-    pkill -f cpuUser.sh
-    ```
+   ```bash
+   pkill -f cpuUser.sh
+   ```
 
 ### Verification
 
@@ -149,23 +149,23 @@ After initiating the kill commands:
 
 1. **Recheck for `startPointlessProcesses.sh`**:
 
-    ```bash
-    pgrep -f startPointlessProcesses.sh
-    ```
+   ```bash
+   pgrep -f startPointlessProcesses.sh
+   ```
 
-    Ensure no process IDs are listed. If there are, manually terminate them:
+   Ensure no process IDs are listed. If there are, manually terminate them:
 
-    ```bash
-    kill -9 <PID>
-    ```
+   ```bash
+   kill -9 <PID>
+   ```
 
-    Replace `<PID>` with the lingering process ID.
+   Replace `<PID>` with the lingering process ID.
 
 2. **Recheck for `cpuUser.sh`**:
 
-    ```bash
-    pgrep -f cpuUser.sh
-    ```
+   ```bash
+   pgrep -f cpuUser.sh
+   ```
 
 ### Monitoring
 
