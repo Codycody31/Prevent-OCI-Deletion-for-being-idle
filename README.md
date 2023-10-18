@@ -2,6 +2,12 @@
 
 The `OCIScripts` repository has been designed to help users maintain their Oracle Cloud Infrastructure (OCI) ForeverFree tier instances active, following Oracle's policy that could lead to the deletion of instances under certain conditions.
 
+## Acknowledgment
+
+This project has been improved upon and expanded from the original work found at [OCIScripts by Drag-NDrop](https://github.com/Drag-NDrop/OCIScripts). We express our gratitude to the original author for their initiative and groundwork.
+
+While the current repository contains modifications, optimizations, and extensions to the original work, the foundational ideas and script mechanisms are attributed to the source mentioned above. We encourage users and contributors to refer to the original repository to understand the context and motivation that led to the inception of these scripts.
+
 ## Why This Script?
 
 Oracle may delete your ForeverFree tier instance if, during a 7-day period, the following criteria are met:
