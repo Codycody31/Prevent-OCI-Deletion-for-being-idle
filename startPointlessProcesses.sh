@@ -31,10 +31,25 @@ get_cpu_load() {
 # Log script startup
 echo "Starting startPointlessProcesses.sh at $(date). Monitoring CPU Load..." >> "$log_file"
 
+# If log file is too big, truncate it
+if [ $(wc -c <"$log_file") -gt 1000000 ]; then
+    # Make var that is the filename with the date appended
+    OLDLOGFILE="trackPointlessWork-$(date +"%Y-%m-%d-%H-%M-%S").log"
+
+    # Copy the file to a new file
+    cp "$log_file" "$OLDLOGFILE"
+
+    # Log the truncation
+    echo "Log file is too big. Moving to $OLDLOGFILE and truncating." >> "$log_file"
+fi
+
+# Main loop
 while true; do
+    # Get current CPU load
     currentCpuLoad=$(get_cpu_load)
     echo "Current CPU Load at $(date): $currentCpuLoad%" >> "$log_file"
 
+    # if CPU load is below 20%, spawn 5 instances of cpuUser.sh
     if [ $currentCpuLoad -le 20 ]; then  # Adjusted the threshold to 20% for some buffer
         echo "CPU Load below threshold at $(date). Spawning 5 instances of cpuUser.sh." >> "$log_file"
         
