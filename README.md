@@ -58,6 +58,51 @@ To keep an eye on the script's activities, you can monitor the log file:
 tail -f /home/ubuntu/prevent_OCI_Deletion_for_being_idle/log/trackPointlessWork.log
 ```
 
+## Why and How of the Script Strategy
+
+**1. Why Use `cpuUser.sh`?**
+
+The `cpuUser.sh` script is designed to generate computational work. The script produces random numbers and writes them to `/dev/null`, which means the numbers are discarded immediately. This activity creates a CPU workload without having any lasting effect on storage or other system resources.
+
+**2. Why Monitor with `startPointlessProcesses.sh`?**
+
+Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `startPointlessProcesses.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `cpuUser.sh` script.
+
+## Modifying the Manager Script
+
+To control the CPU usage, you might want to adjust the manager script. Here's a breakdown of its logic and where you can make modifications:
+
+* **Threshold of Activation**:
+  The line
+
+  ```bash
+  if [ $currentCpuLoad -le 20 ]
+  ```
+
+  determines when to activate the CPU waster script. Here, it activates if CPU load is less than or equal to 20%. If you wish to change this threshold, modify the number `20` to your desired value.
+
+* **Measuring CPU Load**:
+  The line
+
+  ```bash
+  currentCpuLoad=$[100-$(vmstat 1 2|tail -1|awk '{print $15}')]
+  ```
+
+  uses `vmstat` to get system statistics. The value derived represents the CPU idle time, which is then subtracted from 100 to get the actual CPU load. If you are familiar with other system monitoring tools or commands and wish to use them, you can replace this line with an appropriate command that returns the current CPU load.
+
+* **Logging Information**:
+  You can add more detailed logging by modifying the `echo` statements in the script. For example, you can add:
+
+  ```bash
+  echo "Script activated at $(date) due to low CPU load." >> /home/ubuntu/prevent_OCI_Deletion_for_being_idle/log/trackPointlessWork.log
+  ```
+
+## Tips
+
+* If you are uncertain about the effect of changes you make, test them in a controlled environment before deploying them on your main instance.
+  
+* It's a good practice to keep an eye on the system's behavior after making adjustments to ensure it behaves as expected. Tools like `top` or `htop` can be valuable in real-time monitoring.
+
 ## Notes
 
 * Adjust the frequency in the crontab entry as per your requirements.
