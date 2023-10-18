@@ -56,7 +56,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
    */10 * * * * /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/startPointlessProcesses.sh
    ```
 
-## Monitoring
+## Monitoring the Logs
 
 To keep an eye on the script's activities, you can monitor the log file:
 
@@ -118,7 +118,7 @@ If you've disabled the script from executing via `crontab`, but notice that the 
     ```bash
     pgrep -f startPointlessProcesses.sh
     ```
-    
+
     This will display the process IDs of any instances of `startPointlessProcesses.sh` that are currently active.
 
 2. **Inspect for the CPU wastage script** (`cpuUser.sh`):
