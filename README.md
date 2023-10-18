@@ -47,7 +47,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 5. Add the following line to run the script every 10 minutes and log the output:
 
    ```bash
-   */10 * * * * /home/ubuntu/prevent_OCI_Deletion_for_being_idle/startPointlessProcesses.sh >> /home/ubuntu/prevent_OCI_Deletion_for_being_idle/log/trackPointlessWork.log 2>&1
+   */10 * * * * /home/ubuntu/prevent_OCI_Deletion_for_being_idle/startPointlessProcesses.sh
    ```
 
 ## Monitoring
