@@ -186,3 +186,9 @@ Once you've ensured that the unwanted processes are terminated:
 * Adjust the frequency in the crontab entry as per your requirements.
 * Monitor your instance's resource usage regularly to ensure it remains within desired parameters.
 * Understand that this approach, while effective, can be resource-intensive. Ensure you are within the ethical bounds of Oracle's policy and terms of service.
+
+## Disclaimer
+
+The code and scripts provided in this repository are the independent work of Codycody31 and are not endorsed, certified, or otherwise affiliated with VMG Ware. While Codycody31 is a member of VMG Ware, it is important to note that no VMG Ware resources were used in the creation of this repository, and it does not represent the views or policies of VMG Ware.
+
+Users are responsible for understanding the implications and ensuring that their use of these scripts aligns with Oracle's terms of service, as well as other ethical and legal considerations. Always exercise caution and discretion when using third-party scripts, and seek appropriate legal counsel if unsure.
