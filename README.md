@@ -29,7 +29,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 2. Navigate to the repository directory:
 
    ```bash
-   cd prevent_OCI_Deletion_for_being_idle
+   cd Prevent-OCI-Deletion-for-being-idle
    ```
 
 3. Ensure the scripts have execute permissions:
@@ -47,7 +47,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 5. Add the following line to run the script every 10 minutes and log the output:
 
    ```bash
-   */10 * * * * /home/ubuntu/prevent_OCI_Deletion_for_being_idle/startPointlessProcesses.sh
+   */10 * * * * /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/startPointlessProcesses.sh
    ```
 
 ## Monitoring
@@ -55,7 +55,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 To keep an eye on the script's activities, you can monitor the log file:
 
 ```bash
-tail -f /home/ubuntu/prevent_OCI_Deletion_for_being_idle/log/trackPointlessWork.log
+tail -f /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
 ```
 
 ## Why and How of the Script Strategy
@@ -94,7 +94,7 @@ To control the CPU usage, you might want to adjust the manager script. Here's a 
   You can add more detailed logging by modifying the `echo` statements in the script. For example, you can add:
 
   ```bash
-  echo "Script activated at $(date) due to low CPU load." >> /home/ubuntu/prevent_OCI_Deletion_for_being_idle/log/trackPointlessWork.log
+  echo "Script activated at $(date) due to low CPU load." >> /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
   ```
 
 ## Tips

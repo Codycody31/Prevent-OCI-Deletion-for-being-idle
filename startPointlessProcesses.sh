@@ -4,7 +4,7 @@
 
 cd "$(dirname "$0")" || exit
 
-log_file="/home/ubuntu/prevent_OCI_Deletion_for_being_idle/log/trackPointlessWork.log"
+log_file="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log"
 
 # Function to calculate the current CPU load
 get_cpu_load() {
