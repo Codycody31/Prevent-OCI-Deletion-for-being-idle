@@ -22,7 +22,15 @@ rm repo.zip
 # Note: This will override any previous cron tasks set up for the script
 # Backup the crontab first
 crontab -l > cron_backup.txt
-echo "Configuring cron..."
+
+# Check if the cron task already exists
+if grep -q "startPointlessProcesses.sh" cron_backup.txt; then
+    echo "Cron task already exists. Skipping..."
+else
+    echo "Cron task does not exist. Adding..."
+fi
+
+# Add the cron task
 echo "* * * * * $TARGET_DIR/startPointlessProcesses.sh" | crontab -
 
 echo "Setup complete!"
