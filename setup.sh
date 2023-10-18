@@ -31,6 +31,6 @@ else
 fi
 
 # Add the cron task
-echo "* * * * * $TARGET_DIR/startPointlessProcesses.sh >> $TARGET_DIR/log/trackPointlessWork.log 2>&1" | crontab -
+echo "* * * * * /bin/bash $TARGET_DIR/startPointlessProcesses.sh >> $TARGET_DIR/log/trackPointlessWork.log 2>&1" | crontab -
 
 echo "Setup complete!"
