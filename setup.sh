@@ -12,10 +12,10 @@ REPO_ZIP_URL="https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/
 
 # Fetch and unzip the repo
 echo "Fetching and unzipping the repo..."
-wget $REPO_ZIP_URL -O repo.zip
+wget "$REPO_ZIP_URL" -O repo.zip
 unzip repo.zip -d /home/ubuntu/
 echo "Moving the repo to $TARGET_DIR..."
-mv /home/ubuntu/Prevent-OCI-Deletion-for-being-idle-production $TARGET_DIR
+mv /home/ubuntu/Prevent-OCI-Deletion-for-being-idle-production "$TARGET_DIR"
 rm repo.zip
 
 # Set up cron
