@@ -3,6 +3,24 @@
 # Welcome message
 echo "Welcome to the setup script for Prevent-OCI-Deletion-for-being-idle!"
 
+# Ensure that wget and unzip are installed
+echo "Checking if wget and unzip are installed..."
+if ! [ -x "$(command -v wget)" ]; then
+    echo "wget is not installed. Installing..."
+    sudo apt-get install wget
+fi
+if ! [ -x "$(command -v unzip)" ]; then
+    echo "unzip is not installed. Installing..."
+    sudo apt-get install unzip
+fi
+
+# Ensure that the log directory exists
+echo "Checking if the log directory exists..."
+if [ ! -d "/home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log" ]; then
+    echo "The log directory does not exist. Creating..."
+    mkdir /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log
+fi
+
 # Define the directory where we want the repo to reside
 TARGET_DIR="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle"
 echo "This script will install the repo in to $TARGET_DIR..."
