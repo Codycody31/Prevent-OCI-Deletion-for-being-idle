@@ -1,6 +1,6 @@
-# OCIScripts: Improved
+# Prevent OCI Deletion for being idle
 
-The `OCIScripts` repository has been designed to help users maintain their Oracle Cloud Infrastructure (OCI) ForeverFree tier instances active, following Oracle's policy that could lead to the deletion of instances under certain conditions.
+The `Prevent-OCI-Deletion-for-being-idle` repository has been designed to help users maintain their Oracle Cloud Infrastructure (OCI) ForeverFree tier instances active, following Oracle's policy that could lead to the deletion of instances under certain conditions.
 
 ## Acknowledgment
 
