@@ -3,6 +3,20 @@
 # Welcome message
 echo "Welcome to the setup script for Prevent-OCI-Deletion-for-being-idle!"
 
+# Define the directory where we want the repo to reside
+TARGET_DIR="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle"
+
+# Check if the repository already exists
+if [ -d "$TARGET_DIR" ]; then
+    echo "It seems the repository is already installed at $TARGET_DIR."
+    read -p "Do you want to update it to the latest version? (y/n): " decision
+
+    if [[ $decision != "y" ]]; then
+        echo "Exiting setup..."
+        exit 1
+    fi
+fi
+
 # Ensure that wget and unzip are installed
 echo "Checking if wget and unzip are installed..."
 if ! [ -x "$(command -v wget)" ]; then
@@ -16,14 +30,12 @@ fi
 
 # Ensure that the log directory exists
 echo "Checking if the log directory exists..."
-if [ ! -d "/home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log" ]; then
+if [ ! -d "$TARGET_DIR/log" ]; then
     echo "The log directory does not exist. Creating..."
-    mkdir /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log
+    mkdir -p $TARGET_DIR/log
 fi
 
-# Define the directory where we want the repo to reside
-TARGET_DIR="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle"
-echo "This script will install the repo in to $TARGET_DIR..."
+echo "This script will install the repo into $TARGET_DIR..."
 
 # Define the URL for the GitHub zip file
 REPO_ZIP_URL="https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/archive/refs/heads/master.zip"
