@@ -10,9 +10,9 @@ TARGET_DIR="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle"
 OS_TYPE=$(cat /etc/os-release | grep -w "ID" | cut -d "=" -f 2 | tr -d '"')
 
 # Check if the user is root or not
-if [ $EUID != 0 ]; then
+if [ "$EUID" -ne 0 ]; then
     echo "Please run as root"
-    exit
+    exit 0
 fi
 
 # Check if os is ubuntu
@@ -57,7 +57,7 @@ REPO_ZIP_URL="https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/
 
 # Fetch and unzip the repo
 echo "Fetching and unzipping the repo..."
-curl -fsSL $REPO_ZIP_URL -o repo.zip
+wget $REPO_ZIP_URL -O repo.zip
 unzip repo.zip -d /home/ubuntu/
 echo "Moving the repo to $TARGET_DIR..."
 mv /home/ubuntu/Prevent-OCI-Deletion-for-being-idle-master $TARGET_DIR
