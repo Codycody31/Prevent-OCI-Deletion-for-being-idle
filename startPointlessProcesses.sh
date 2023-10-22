@@ -41,7 +41,7 @@ cd "$SCRIPT_DIR" || exit
 log "Starting startPointlessProcesses.sh at $(date). Monitoring CPU Load..."
 
 # If log file is too big, truncate it
-if [ $(wc -c <"$log_file") -gt 1000000 ]; then
+if [ "$(wc -c <"$log_file")" -gt 1000000 ]; then
     # Make var that is the filename with the date appended
     OLDLOGFILE="trackPointlessWork-$(date +"%Y-%m-%d-%H-%M-%S").log"
 
