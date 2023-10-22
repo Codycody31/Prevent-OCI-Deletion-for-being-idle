@@ -6,6 +6,7 @@ echo "Welcome to the setup script for Prevent-OCI-Deletion-for-being-idle!"
 # Define the directory where we want the repo to reside
 TARGET_DIR="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle"
 
+# Check if the user is root or not
 if [ $EUID != 0 ]; then
     echo "Please run as root"
     exit
@@ -22,7 +23,7 @@ if [ -d "$TARGET_DIR" ]; then
     echo "It seems the repository is already installed at $TARGET_DIR."
     read -p "Do you want to update it to the latest version? (y/n): " decision
 
-    if [[ $decision != "y" || $decision != "Y" || $decision != "yes" || $decision != "Yes" ]]; then
+    if [ "$decision" == "y" ] || [ "$decision" == "Y" ]; then
         echo "Exiting setup..."
         exit 1
     fi
