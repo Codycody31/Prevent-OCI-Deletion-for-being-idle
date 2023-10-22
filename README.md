@@ -50,10 +50,10 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
    crontab -e
    ```
 
-5. Add the following line to run the script every 10 minutes and log the output:
+5. Add the following line to run the script every minute and log the output:
 
    ```bash
-   * * * * * /bin/bash /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/startPointlessProcesses.sh
+   * * * * * /bin/bash  $HOME/Prevent-OCI-Deletion-for-being-idle/startPointlessProcesses.sh >>  $HOME/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log 2>&1
    ```
 
 ## Automated Setup
@@ -77,7 +77,7 @@ wget https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being
 To keep an eye on the script's activities, you can monitor the log file:
 
 ```bash
-tail -f /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
+tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
 ```
 
 ## Why and How of the Script Strategy
@@ -116,7 +116,7 @@ To control the CPU usage, you might want to adjust the manager script. Here's a 
   You can add more detailed logging by modifying the `echo` statements in the script. For example, you can add:
 
   ```bash
-  echo "Script activated at $(date) due to low CPU load." >> /home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
+  echo "Script activated at $(date) due to low CPU load." >> $HOME/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
   ```
 
 Certainly! Let's integrate this into the README as a section on troubleshooting:
