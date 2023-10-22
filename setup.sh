@@ -6,6 +6,9 @@ echo "Welcome to the setup script for Prevent-OCI-Deletion-for-being-idle!"
 # Define the directory where we want the repo to reside
 TARGET_DIR="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle"
 
+# OS type
+OS_TYPE=$(cat /etc/os-release | grep -w "ID" | cut -d "=" -f 2 | tr -d '"')
+
 # Check if the user is root or not
 if [ $EUID != 0 ]; then
     echo "Please run as root"
@@ -23,7 +26,7 @@ if [ -d "$TARGET_DIR" ]; then
     echo "It seems the repository is already installed at $TARGET_DIR."
     read -p "Do you want to update it to the latest version? (y/n): " decision
 
-    if [ "$decision" == "y" ]; then
+    if [ "$decision" == "n" ]; then
         echo "Exiting setup..."
         exit 1
     fi
@@ -54,7 +57,7 @@ REPO_ZIP_URL="https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/
 
 # Fetch and unzip the repo
 echo "Fetching and unzipping the repo..."
-wget $REPO_ZIP_URL -O repo.zip
+curl -fsSL $REPO_ZIP_URL -o repo.zip
 unzip repo.zip -d /home/ubuntu/
 echo "Moving the repo to $TARGET_DIR..."
 mv /home/ubuntu/Prevent-OCI-Deletion-for-being-idle-master $TARGET_DIR
