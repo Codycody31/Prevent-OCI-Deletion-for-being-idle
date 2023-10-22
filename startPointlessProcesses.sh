@@ -11,9 +11,20 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 # Define the log file path
 log_file="$SCRIPT_DIR/log/trackPointlessWork.log"
 
+# Function to calculate the current CPU load
+get_cpu_load() {
+    echo $((100 - $(vmstat 1 2 | tail -1 | awk '{print $15}')))
+}
+
+# Function to log to the log file and to stdout
+log() {
+    echo "$1" >> "$log_file"
+    echo "$1"
+}
+
 # Check if lockfile exists
 if [ -e "$LOCKFILE" ]; then
-    echo "Another instance of the script is already running. Exiting." >> "$log_file"
+    log "Another instance of the script is already running. Exiting."
     exit 0
 fi
 
@@ -26,13 +37,8 @@ trap "rm -f $LOCKFILE" EXIT
 # Change directory to the script's directory
 cd "$SCRIPT_DIR" || exit
 
-# Function to calculate the current CPU load
-get_cpu_load() {
-    echo $((100 - $(vmstat 1 2 | tail -1 | awk '{print $15}')))
-}
-
 # Log script startup
-echo "Starting startPointlessProcesses.sh at $(date). Monitoring CPU Load..." >> "$log_file"
+log "Starting startPointlessProcesses.sh at $(date). Monitoring CPU Load..."
 
 # If log file is too big, truncate it
 if [ $(wc -c <"$log_file") -gt 1000000 ]; then
@@ -43,18 +49,18 @@ if [ $(wc -c <"$log_file") -gt 1000000 ]; then
     cp "$log_file" "$OLDLOGFILE"
 
     # Log the truncation
-    echo "Log file is too big. Moving to $OLDLOGFILE and truncating." >> "$log_file"
+    log "Log file is too big. Moving to $OLDLOGFILE and truncating."
 fi
 
 # Main loop
 while true; do
     # Get current CPU load
     currentCpuLoad=$(get_cpu_load)
-    echo "Current CPU Load at $(date): $currentCpuLoad%" >> "$log_file"
+    log "Current CPU Load at $(date): $currentCpuLoad%"
 
     # if CPU load is below 20%, spawn 5 instances of cpuUser.sh
     if [ $currentCpuLoad -le 20 ]; then  # Adjusted the threshold to 20% for some buffer
-        echo "CPU Load below threshold at $(date). Spawning 5 instances of cpuUser.sh." >> "$log_file"
+        log "CPU Load below threshold at $(date). Spawning 5 instances of cpuUser.sh."
         
         # Spawn 5 instances of cpuUser.sh concurrently
         for i in {1..5}; do
@@ -63,9 +69,9 @@ while true; do
         
         wait  # Wait for all spawned scripts to complete
         
-        echo "Completed running cpuUser.sh instances at $(date)." >> "$log_file"
+        log "Completed running cpuUser.sh instances at $(date)."
     else
-        echo "CPU Load is within acceptable range at $(date). No action taken." >> "$log_file"
+        log "CPU Load is within acceptable range at $(date). No action taken."
     fi
     
     sleep 10  # 10-second delay between checks

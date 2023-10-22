@@ -1,0 +1,61 @@
+Starting startPointlessProcesses.sh at Sun Oct 22 18:15:23 EDT 2023. Monitoring CPU Load...
+Current CPU Load at Sun Oct 22 18:15:24 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:15:24 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:15:25 EDT 2023.
+Current CPU Load at Sun Oct 22 18:15:36 EDT 2023: 0%
+CPU Load below threshold at Sun Oct 22 18:15:36 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:15:36 EDT 2023.
+Current CPU Load at Sun Oct 22 18:15:47 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:15:47 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:15:48 EDT 2023.
+Current CPU Load at Sun Oct 22 18:15:59 EDT 2023: 0%
+CPU Load below threshold at Sun Oct 22 18:15:59 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:15:59 EDT 2023.
+Current CPU Load at Sun Oct 22 18:16:10 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:16:10 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:16:11 EDT 2023.
+Current CPU Load at Sun Oct 22 18:16:22 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:16:22 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:16:22 EDT 2023.
+Current CPU Load at Sun Oct 22 18:16:33 EDT 2023: 0%
+CPU Load below threshold at Sun Oct 22 18:16:33 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:16:34 EDT 2023.
+Current CPU Load at Sun Oct 22 18:16:45 EDT 2023: 0%
+CPU Load below threshold at Sun Oct 22 18:16:45 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:16:46 EDT 2023.
+Current CPU Load at Sun Oct 22 18:16:57 EDT 2023: 0%
+CPU Load below threshold at Sun Oct 22 18:16:57 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:16:57 EDT 2023.
+Current CPU Load at Sun Oct 22 18:17:08 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:17:08 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:17:09 EDT 2023.
+Current CPU Load at Sun Oct 22 18:17:20 EDT 2023: 0%
+CPU Load below threshold at Sun Oct 22 18:17:20 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:17:20 EDT 2023.
+Current CPU Load at Sun Oct 22 18:17:31 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:17:31 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:17:31 EDT 2023.
+Current CPU Load at Sun Oct 22 18:17:42 EDT 2023: 0%
+CPU Load below threshold at Sun Oct 22 18:17:42 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:17:43 EDT 2023.
+Current CPU Load at Sun Oct 22 18:17:54 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:17:54 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:17:54 EDT 2023.
+Current CPU Load at Sun Oct 22 18:18:05 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:18:05 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:18:06 EDT 2023.
+Current CPU Load at Sun Oct 22 18:18:17 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:18:17 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:18:17 EDT 2023.
+Current CPU Load at Sun Oct 22 18:18:28 EDT 2023: 1%
+CPU Load below threshold at Sun Oct 22 18:18:28 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:18:29 EDT 2023.
+Current CPU Load at Sun Oct 22 18:18:40 EDT 2023: 7%
+CPU Load below threshold at Sun Oct 22 18:18:40 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:18:40 EDT 2023.
+Current CPU Load at Sun Oct 22 18:18:51 EDT 2023: 0%
+CPU Load below threshold at Sun Oct 22 18:18:51 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:18:52 EDT 2023.
+Current CPU Load at Sun Oct 22 18:19:03 EDT 2023: 10%
+CPU Load below threshold at Sun Oct 22 18:19:03 EDT 2023. Spawning 5 instances of cpuUser.sh.
+Completed running cpuUser.sh instances at Sun Oct 22 18:19:04 EDT 2023.
