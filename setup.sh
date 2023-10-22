@@ -6,27 +6,12 @@ echo "Welcome to the setup script for Prevent-OCI-Deletion-for-being-idle!"
 # Define the directory where we want the repo to reside
 TARGET_DIR="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle"
 
-# OS type
-OS_TYPE=$(cat /etc/os-release | grep -w "ID" | cut -d "=" -f 2 | tr -d '"')
-
-# Check if the user is root or not
-if [ "$EUID" -ne 0 ]; then
-    echo "Please run as root"
-    exit 0
-fi
-
-# Check if os is ubuntu
-if [ $OS_TYPE != "ubuntu" ]; then
-    echo "This script only supports Ubuntu for now."
-    exit
-fi
-
 # Check if the repository already exists
 if [ -d "$TARGET_DIR" ]; then
     echo "It seems the repository is already installed at $TARGET_DIR."
     read -p "Do you want to update it to the latest version? (y/n): " decision
 
-    if [ "$decision" == "n" ]; then
+    if [[ $decision == "n" ]]; then
         echo "Exiting setup..."
         exit 1
     fi
@@ -36,11 +21,11 @@ fi
 echo "Checking if wget and unzip are installed..."
 if ! [ -x "$(command -v wget)" ]; then
     echo "wget is not installed. Installing..."
-    apt-get -y install wget >/dev/null 2>&1
+    sudo apt-get install wget
 fi
 if ! [ -x "$(command -v unzip)" ]; then
     echo "unzip is not installed. Installing..."
-    apt-get -y install unzip >/dev/null 2>&1
+    sudo apt-get install unzip
 fi
 
 # Ensure that the log directory exists
