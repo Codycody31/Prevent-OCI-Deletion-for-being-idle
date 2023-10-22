@@ -35,7 +35,7 @@ fi
 echo "Checking if the log directory exists..."
 if [ ! -d "$TARGET_DIR/log" ]; then
     echo "The log directory does not exist. Creating..."
-    mkdir -p $TARGET_DIR/log
+    mkdir -p "$TARGET_DIR"/log
 fi
 
 echo "This script will install the repo into $TARGET_DIR..."
@@ -45,29 +45,29 @@ REPO_ZIP_URL="https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/
 
 # Fetch and unzip the repo
 echo "Fetching and unzipping the repo..."
-wget $REPO_ZIP_URL -O $HOME/POCIDFBI.zip
-unzip $HOME/POCIDFBI.zip -d $HOME/
+wget $REPO_ZIP_URL -O "$HOME"/POCIDFBI.zip
+unzip "$HOME"/POCIDFBI.zip -d "$HOME"/
 
 echo "Moving the repo to $TARGET_DIR..."
 
 # Check if target dir is not empty
-if [ "$(ls -A $TARGET_DIR)" ]; then
+if [ "$(ls -A "$TARGET_DIR")" ]; then
     echo "Target directory is not empty. Cleaning up..."
-    rm -f -r $TARGET_DIR/*
+    rm -f -r "$TARGET_DIR"/*
 fi
 
 # Move content to location
-mv $HOME/Prevent-OCI-Deletion-for-being-idle-master/* $TARGET_DIR
+mv "$HOME"/Prevent-OCI-Deletion-for-being-idle-master/* "$TARGET_DIR"
 
 # Clean up files
-rm -f -r $HOME/POCIDFBI.zip $HOME/Prevent-OCI-Deletion-for-being-idle-master
+rm -f -r "$HOME"/POCIDFBI.zip "$HOME"/Prevent-OCI-Deletion-for-being-idle-master
 
 # Set up cron
 # Backup the crontab first
-crontab -l > $HOME/cron_backup.txt
+crontab -l > "$HOME"/cron_backup.txt
 
 # Check if the cron task already exists
-if grep -q "startPointlessProcesses.sh" $HOME/cron_backup.txt; then
+if grep -q "startPointlessProcesses.sh" "$HOME"/cron_backup.txt; then
     echo "Cron task already exists. Skipping..."
 else
     echo "Cron task does not exist. Adding..."

@@ -59,7 +59,7 @@ while true; do
     log "Current CPU Load at $(date): $currentCpuLoad%"
 
     # if CPU load is below 20%, spawn 5 instances of cpuUser.sh
-    if [ $currentCpuLoad -le 20 ]; then  # Adjusted the threshold to 20% for some buffer
+    if [ "$currentCpuLoad" -le 20 ]; then  # Adjusted the threshold to 20% for some buffer
         log "CPU Load below threshold at $(date). Spawning 5 instances of cpuUser.sh."
         
         # Spawn 5 instances of cpuUser.sh concurrently
