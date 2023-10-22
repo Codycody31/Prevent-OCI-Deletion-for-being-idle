@@ -11,7 +11,7 @@ if [ -d "$TARGET_DIR" ]; then
     echo "It seems the repository is already installed at $TARGET_DIR."
     read -p "Do you want to update it to the latest version? (y/n): " decision
 
-    if [[ $decision != "y" ]]; then
+    if [[ $decision != "y" || $decision != "Y" || $decision != "yes" || $decision != "Yes" ]]; then
         echo "Exiting setup..."
         exit 1
     fi
