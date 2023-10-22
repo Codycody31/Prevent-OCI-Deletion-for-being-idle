@@ -45,7 +45,7 @@ REPO_ZIP_URL="https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/
 
 # Fetch and unzip the repo
 echo "Fetching and unzipping the repo..."
-wget $REPO_ZIP_URL -O POCIDFBI.zip
+wget $REPO_ZIP_URL -O $HOME/POCIDFBI.zip
 unzip POCIDFBI.zip -d $HOME/
 
 echo "Moving the repo to $TARGET_DIR..."
