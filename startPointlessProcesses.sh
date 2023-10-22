@@ -5,8 +5,11 @@
 # Define the lockfile path
 LOCKFILE="/tmp/startPointlessProcesses.lock"
 
+# Get the directory of the script itself
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+
 # Define the log file path
-log_file="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log"
+log_file="$SCRIPT_DIR/log/trackPointlessWork.log"
 
 # Check if lockfile exists
 if [ -e "$LOCKFILE" ]; then
@@ -21,7 +24,7 @@ touch "$LOCKFILE"
 trap "rm -f $LOCKFILE" EXIT
 
 # Change directory to the script's directory
-cd "$(dirname "$0")" || exit
+cd "$SCRIPT_DIR" || exit
 
 # Function to calculate the current CPU load
 get_cpu_load() {
@@ -55,7 +58,7 @@ while true; do
         
         # Spawn 5 instances of cpuUser.sh concurrently
         for i in {1..5}; do
-            /bin/bash cpuUser.sh &
+            /bin/bash "$SCRIPT_DIR/cpuUser.sh" &
         done
         
         wait  # Wait for all spawned scripts to complete

@@ -3,8 +3,11 @@
 # Welcome message
 echo "Welcome to the setup script for Prevent-OCI-Deletion-for-being-idle!"
 
+# Get the username of the user executing the script
+CURRENT_USER=$(whoami)
+
 # Define the directory where we want the repo to reside
-TARGET_DIR="/home/ubuntu/Prevent-OCI-Deletion-for-being-idle"
+TARGET_DIR="$HOME/Prevent-OCI-Deletion-for-being-idle"
 
 # Check if the repository already exists
 if [ -d "$TARGET_DIR" ]; then
@@ -42,11 +45,22 @@ REPO_ZIP_URL="https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/
 
 # Fetch and unzip the repo
 echo "Fetching and unzipping the repo..."
-wget $REPO_ZIP_URL -O repo.zip
-unzip repo.zip -d /home/ubuntu/
+wget $REPO_ZIP_URL -O POCIDFBI.zip
+unzip POCIDFBI.zip -d $HOME/
+
 echo "Moving the repo to $TARGET_DIR..."
-mv /home/ubuntu/Prevent-OCI-Deletion-for-being-idle-master $TARGET_DIR
-rm repo.zip
+
+# Check if target dir is not empty
+if [ "$(ls -A $TARGET_DIR)" ]; then
+    echo "Target directory is not empty. Cleaning up..."
+    rm -f -r $TARGET_DIR/*
+fi
+
+# Move content to location
+mv $HOME/Prevent-OCI-Deletion-for-being-idle-master/* $TARGET_DIR
+
+# Clean up files
+rm -f -r $HOME/POCIDFBI.zip $HOME/Prevent-OCI-Deletion-for-being-idle-master
 
 # Set up cron
 # Backup the crontab first
