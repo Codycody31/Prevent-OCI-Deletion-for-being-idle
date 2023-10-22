@@ -53,7 +53,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 5. Add the following line to run the script every minute and log the output:
 
    ```bash
-   * * * * * /bin/bash  $HOME/Prevent-OCI-Deletion-for-being-idle/startPointlessProcesses.sh >>  $HOME/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log 2>&1
+   * * * * * /bin/bash  $HOME/Prevent-OCI-Deletion-for-being-idle/startPointlessProcesses.sh
    ```
 
 ## Automated Setup
@@ -113,15 +113,11 @@ To control the CPU usage, you might want to adjust the manager script. Here's a 
   uses `vmstat` to get system statistics. The value derived represents the CPU idle time, which is then subtracted from 100 to get the actual CPU load. If you are familiar with other system monitoring tools or commands and wish to use them, you can replace this line with an appropriate command that returns the current CPU load.
 
 * **Logging Information**:
-  You can add more detailed logging by modifying the `echo` statements in the script. For example, you can add:
+  You can add more detailed logging by adding `log` commands to the script. For example, if you want to log the time when the script activates, you can add the following line:
 
   ```bash
-  echo "Script activated at $(date) due to low CPU load." >> $HOME/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
+  log "Script activated at $(date) due to low CPU load."
   ```
-
-Certainly! Let's integrate this into the README as a section on troubleshooting:
-
----
 
 ## Troubleshooting: Stopping Rogue Script Instances
 

@@ -72,7 +72,7 @@ if grep -q "startPointlessProcesses.sh" $HOME/cron_backup.txt; then
 else
     echo "Cron task does not exist. Adding..."
     # Add the cron task without overwriting
-    (crontab -l; echo "* * * * * /bin/bash $TARGET_DIR/startPointlessProcesses.sh >> $TARGET_DIR/log/trackPointlessWork.log 2>&1") | crontab -
+    (crontab -l; echo "* * * * * /bin/bash $TARGET_DIR/startPointlessProcesses.sh") | crontab -
 fi
 
 echo "Setup complete!"
