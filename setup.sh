@@ -11,31 +11,31 @@ TARGET_DIR="$HOME/Prevent-OCI-Deletion-for-being-idle"
 
 # Check if the repository already exists
 if [ -d "$TARGET_DIR" ]; then
-    echo "It seems the repository is already installed at $TARGET_DIR."
-    read -p "Do you want to update it to the latest version? (y/n): " decision
+  echo "It seems the repository is already installed at $TARGET_DIR."
+  read -p "Do you want to update it to the latest version? (y/n): " decision
 
-    if [[ $decision == "n" ]]; then
-        echo "Exiting setup..."
-        exit 1
-    fi
+  if [[ $decision == "n" ]]; then
+    echo "Exiting setup..."
+    exit 1
+  fi
 fi
 
 # Ensure that wget and unzip are installed
 echo "Checking if wget and unzip are installed..."
 if ! [ -x "$(command -v wget)" ]; then
-    echo "wget is not installed. Installing..."
-    sudo apt-get install wget
+  echo "wget is not installed. Installing..."
+  sudo apt-get install wget
 fi
 if ! [ -x "$(command -v unzip)" ]; then
-    echo "unzip is not installed. Installing..."
-    sudo apt-get install unzip
+  echo "unzip is not installed. Installing..."
+  sudo apt-get install unzip
 fi
 
 # Ensure that the log directory exists
 echo "Checking if the log directory exists..."
 if [ ! -d "$TARGET_DIR/log" ]; then
-    echo "The log directory does not exist. Creating..."
-    mkdir -p "$TARGET_DIR"/log
+  echo "The log directory does not exist. Creating..."
+  mkdir -p "$TARGET_DIR"/log
 fi
 
 echo "This script will install the repo into $TARGET_DIR..."
@@ -52,8 +52,8 @@ echo "Moving the repo to $TARGET_DIR..."
 
 # Check if target dir is not empty
 if [ "$(ls -A "$TARGET_DIR")" ]; then
-    echo "Target directory is not empty. Cleaning up..."
-    rm -f -r "$TARGET_DIR"/*
+  echo "Target directory is not empty. Cleaning up..."
+  rm -f -r "$TARGET_DIR"/*
 fi
 
 # Move content to location
@@ -64,15 +64,18 @@ rm -f -r "$HOME"/POCIDFBI.zip "$HOME"/Prevent-OCI-Deletion-for-being-idle-master
 
 # Set up cron
 # Backup the crontab first
-crontab -l > "$HOME"/cron_backup.txt
+crontab -l >"$HOME"/cron_backup.txt
 
 # Check if the cron task already exists
 if grep -q "startPointlessProcesses.sh" "$HOME"/cron_backup.txt; then
-    echo "Cron task already exists. Skipping..."
+  echo "Cron task already exists. Skipping..."
 else
-    echo "Cron task does not exist. Adding..."
-    # Add the cron task without overwriting
-    (crontab -l; echo "* * * * * /bin/bash $TARGET_DIR/startPointlessProcesses.sh") | crontab -
+  echo "Cron task does not exist. Adding..."
+  # Add the cron task without overwriting
+  (
+    crontab -l
+    echo "* * * * * /bin/bash $TARGET_DIR/startPointlessProcesses.sh"
+  ) | crontab -
 fi
 
 echo "Setup complete!"
