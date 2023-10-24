@@ -21,7 +21,7 @@ get_cpu_load() {
 
 # Function to log to the log file and to stdout
 log() {
-    echo "$1" >> "$log_file"
+    echo "$1" >>"$log_file"
     echo "$1"
 }
 
@@ -61,21 +61,21 @@ while true; do
     currentCpuLoad=$(get_cpu_load)
     log "Current CPU Load at $(date): $currentCpuLoad%"
 
-    # if CPU load is below 20%, spawn 5 instances of cpuUser.sh
-    if [ "$currentCpuLoad" -le 20 ]; then  # Adjusted the threshold to 20% for some buffer
-        log "CPU Load below threshold at $(date). Spawning 5 instances of cpuUser.sh."
-        
-        # Spawn 5 instances of cpuUser.sh concurrently
+    # if CPU load is below 20%, spawn 5 instances of WasteCPUWorker.sh
+    if [ "$currentCpuLoad" -le 20 ]; then # Adjusted the threshold to 20% for some buffer
+        log "CPU Load below threshold at $(date). Spawning 5 instances of WasteCPUWorker.sh."
+
+        # Spawn 5 instances of WasteCPUWorker.sh concurrently
         for _ in {1..5}; do
-            /bin/bash "$SCRIPT_DIR/cpuUser.sh" &
+            /bin/bash "$SCRIPT_DIR/workers/WasteCPUWorker.sh" &
         done
-        
-        wait  # Wait for all spawned scripts to complete
-        
-        log "Completed running cpuUser.sh instances at $(date)."
+
+        wait # Wait for all spawned scripts to complete
+
+        log "Completed running WasteCPUWorker.sh instances at $(date)."
     else
         log "CPU Load is within acceptable range at $(date). No action taken."
     fi
-    
-    sleep 10  # 10-second delay between checks
+
+    sleep 10 # 10-second delay between checks
 done

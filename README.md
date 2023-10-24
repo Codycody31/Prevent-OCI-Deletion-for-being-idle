@@ -20,8 +20,8 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 
 ## Scripts Description
 
-1. **cpuUser.sh** - This is the CPU "waster" script, designed to produce computational work.
-2. **startPointlessProcesses.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `cpuUser.sh` if the usage falls below a certain threshold.
+1. **WasteCPUWorker.sh** - This is the CPU "waster" script, designed to produce computational work.
+2. **startPointlessProcesses.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
 3. **cron instructions** - Guidelines to set up a scheduled task using crontab to automate the process.
 
 ## Setup & Usage
@@ -82,13 +82,13 @@ tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
 
 ## Why and How of the Script Strategy
 
-**1. Why Use `cpuUser.sh`?**
+**1. Why Use `WasteCPUWorker.sh`?**
 
-The `cpuUser.sh` script is designed to generate computational work. The script produces random numbers and writes them to `/dev/null`, which means the numbers are discarded immediately. This activity creates a CPU workload without having any lasting effect on storage or other system resources.
+The `WasteCPUWorker.sh` script is designed to generate computational work. The script produces random numbers and writes them to `/dev/null`, which means the numbers are discarded immediately. This activity creates a CPU workload without having any lasting effect on storage or other system resources.
 
 **2. Why Monitor with `startPointlessProcesses.sh`?**
 
-Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `startPointlessProcesses.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `cpuUser.sh` script.
+Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `startPointlessProcesses.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `WasteCPUWorker.sh` script.
 
 ## Modifying the Manager Script
 
@@ -133,10 +133,10 @@ If you've disabled the script from executing via `crontab`, but notice that the 
 
    This will display the process IDs of any instances of `startPointlessProcesses.sh` that are currently active.
 
-2. **Inspect for the CPU wastage script** (`cpuUser.sh`):
+2. **Inspect for the CPU wastage script** (`WasteCPUWorker.sh`):
 
    ```bash
-   pgrep -f cpuUser.sh
+   pgrep -f WasteCPUWorker.sh
    ```
 
    If this script is active, you'll see its process IDs.
@@ -149,10 +149,10 @@ If you've disabled the script from executing via `crontab`, but notice that the 
    pkill -f startPointlessProcesses.sh
    ```
 
-2. **Terminate `cpuUser.sh` instances**:
+2. **Terminate `WasteCPUWorker.sh` instances**:
 
    ```bash
-   pkill -f cpuUser.sh
+   pkill -f WasteCPUWorker.sh
    ```
 
 ### Verification
@@ -173,10 +173,10 @@ After initiating the kill commands:
 
    Replace `<PID>` with the lingering process ID.
 
-2. **Recheck for `cpuUser.sh`**:
+2. **Recheck for `WasteCPUWorker.sh`**:
 
    ```bash
-   pgrep -f cpuUser.sh
+   pgrep -f WasteCPUWorker.sh
    ```
 
 ### Monitoring
