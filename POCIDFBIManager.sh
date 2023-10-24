@@ -7,7 +7,8 @@ LOCKFILE="/tmp/POCIDFBIManager.lock"
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
 # Define the log file path
-log_file="$SCRIPT_DIR/log/POCIDFBITrack.log"
+LOG_DIR="$SCRIPT_DIR/log"
+LOG_FILE="$LOG_DIR/POCIDFBITrack.log"
 
 # Ensure that the log directory exists
 mkdir -p "$SCRIPT_DIR/log"
@@ -19,8 +20,26 @@ get_cpu_load() {
 
 # Function to log to the log file and to stdout
 log() {
-    echo "$1" >>"$log_file"
+    echo "$1" >>"$LOG_FILE"
     echo "$1"
+}
+
+# Function to clean up the log file
+cleanup_log() {
+    # If log file is too big, truncate it
+    if [ "$(wc -c <"$LOG_FILE")" -gt 1000000 ]; then
+        # Make var that is the filename with the date appended
+        OLDLOGFILE="$LOG_DIR/POCIDFBITrack-$(date +"%Y-%m-%d-%H-%M-%S").log"
+
+        # Copy the file to a new file
+        cp "$LOG_FILE" "$OLDLOGFILE"
+
+        # Log the truncation
+        log "Log file is too big. Moving to $OLDLOGFILE and truncating."
+
+        # Truncate the log file
+        truncate -s 0 "$LOG_FILE"
+    fi
 }
 
 # Check if lockfile exists
@@ -40,18 +59,6 @@ cd "$SCRIPT_DIR" || exit
 
 # Log script startup
 log "Starting POCIDFBIManager.sh at $(date). Monitoring CPU Load..."
-
-# If log file is too big, truncate it
-if [ "$(wc -c <"$log_file")" -gt 1000000 ]; then
-    # Make var that is the filename with the date appended
-    OLDLOGFILE="POCIDFBITrack-$(date +"%Y-%m-%d-%H-%M-%S").log"
-
-    # Copy the file to a new file
-    cp "$log_file" "$OLDLOGFILE"
-
-    # Log the truncation
-    log "Log file is too big. Moving to $OLDLOGFILE and truncating."
-fi
 
 # Main loop
 while true; do
@@ -73,6 +80,11 @@ while true; do
         log "Completed running WasteCPUWorker.sh instances at $(date)."
     else
         log "CPU Load is within acceptable range at $(date). No action taken."
+    fi
+
+    # Random chance to run the cleanup_log function
+    if [ "$((RANDOM % 100))" -lt 5 ]; then
+        cleanup_log
     fi
 
     sleep 10 # 10-second delay between checks
