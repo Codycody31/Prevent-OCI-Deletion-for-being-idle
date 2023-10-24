@@ -58,10 +58,10 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 
 ## Automated Setup
 
-For a quick and easy setup, you can run the following one-liner which fetches the `setup.sh` script from the repository and executes it:
+For a quick and easy setup, you can run the following one-liner which fetches the `install.sh` script from the repository and executes it:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/install.sh | bash
 ```
 
 Upon running the above command, the script will be set up to trigger every minute via `crontab`.
@@ -69,7 +69,7 @@ Upon running the above command, the script will be set up to trigger every minut
 If the above command fails, you can try the following:
 
 ```bash
-wget https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/setup.sh && bash setup.sh
+wget https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/install.sh && bash install.sh
 ```
 
 ## Monitoring the Logs
