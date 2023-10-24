@@ -77,7 +77,7 @@ wget https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being
 To keep an eye on the script's activities, you can monitor the log file:
 
 ```bash
-tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
+tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/POCIDFBITrack.log
 ```
 
 ## Why and How of the Script Strategy
