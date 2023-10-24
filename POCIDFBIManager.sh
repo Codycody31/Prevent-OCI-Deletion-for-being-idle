@@ -42,6 +42,26 @@ cleanup_log() {
     fi
 }
 
+# Function to cleanup when the script exits
+exit_handler() {
+    # Kill all spawned waste workers
+    log "Killing all spawned WasteCPUWorker.sh instances..."
+    # TODO: Might need to ensure the parent who spawned it is a POCIDFBIManager.sh instance
+    pkill -f WasteCPUWorker.sh
+    pkill -f WasteMemoryWorker.sh
+
+    # Remove lockfile
+    log "Removing lockfile..."
+    rm -f "$LOCKFILE"
+
+    # Log script exit
+    log "Exiting POCIDFBIManager.sh at $(date)."
+    exit 1
+}
+
+# Trap specific signals and run the exit_handler
+trap exit_handler SIGINT SIGTERM
+
 # Check if lockfile exists
 if [ -e "$LOCKFILE" ]; then
     log "Another instance of the POCIDFBIManager.sh script is already running. Exiting."
