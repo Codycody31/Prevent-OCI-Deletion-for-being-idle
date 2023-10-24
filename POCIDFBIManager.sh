@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Run this script using a "screen" (# apt install screen) ($ man screen)
-
 # Define the lockfile path
 LOCKFILE="/tmp/POCIDFBIManager.lock"
 
