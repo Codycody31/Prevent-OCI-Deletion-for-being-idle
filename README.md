@@ -21,7 +21,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 ## Scripts Description
 
 1. **WasteCPUWorker.sh** - This is the CPU "waster" script, designed to produce computational work.
-2. **startPointlessProcesses.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
+2. **POCIDFBIManager.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
 3. **cron instructions** - Guidelines to set up a scheduled task using crontab to automate the process.
 
 ## Setup & Usage
@@ -53,7 +53,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 5. Add the following line to run the script every minute and log the output:
 
    ```bash
-   * * * * * /bin/bash  $HOME/Prevent-OCI-Deletion-for-being-idle/startPointlessProcesses.sh
+   * * * * * /bin/bash  $HOME/Prevent-OCI-Deletion-for-being-idle/POCIDFBIManager.sh
    ```
 
 ## Automated Setup
@@ -86,9 +86,9 @@ tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/trackPointlessWork.log
 
 The `WasteCPUWorker.sh` script is designed to generate computational work. The script produces random numbers and writes them to `/dev/null`, which means the numbers are discarded immediately. This activity creates a CPU workload without having any lasting effect on storage or other system resources.
 
-**2. Why Monitor with `startPointlessProcesses.sh`?**
+**2. Why Monitor with `POCIDFBIManager.sh`?**
 
-Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `startPointlessProcesses.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `WasteCPUWorker.sh` script.
+Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `POCIDFBIManager.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `WasteCPUWorker.sh` script.
 
 ## Modifying the Manager Script
 
@@ -125,13 +125,13 @@ If you've disabled the script from executing via `crontab`, but notice that the 
 
 ### Identifying Running Scripts
 
-1. **Check for the manager script** (`startPointlessProcesses.sh`):
+1. **Check for the manager script** (`POCIDFBIManager.sh`):
 
    ```bash
-   pgrep -f startPointlessProcesses.sh
+   pgrep -f POCIDFBIManager.sh
    ```
 
-   This will display the process IDs of any instances of `startPointlessProcesses.sh` that are currently active.
+   This will display the process IDs of any instances of `POCIDFBIManager.sh` that are currently active.
 
 2. **Inspect for the CPU wastage script** (`WasteCPUWorker.sh`):
 
@@ -143,10 +143,10 @@ If you've disabled the script from executing via `crontab`, but notice that the 
 
 ### Terminating the Scripts
 
-1. **Terminate `startPointlessProcesses.sh` instances**:
+1. **Terminate `POCIDFBIManager.sh` instances**:
 
    ```bash
-   pkill -f startPointlessProcesses.sh
+   pkill -f POCIDFBIManager.sh
    ```
 
 2. **Terminate `WasteCPUWorker.sh` instances**:
@@ -159,10 +159,10 @@ If you've disabled the script from executing via `crontab`, but notice that the 
 
 After initiating the kill commands:
 
-1. **Recheck for `startPointlessProcesses.sh`**:
+1. **Recheck for `POCIDFBIManager.sh`**:
 
    ```bash
-   pgrep -f startPointlessProcesses.sh
+   pgrep -f POCIDFBIManager.sh
    ```
 
    Ensure no process IDs are listed. If there are, manually terminate them:

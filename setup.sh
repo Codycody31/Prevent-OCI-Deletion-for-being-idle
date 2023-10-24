@@ -64,12 +64,12 @@ rm -f -r "$HOME/POCIDFBI.zip" "$HOME/Prevent-OCI-Deletion-for-being-idle-master"
 crontab -l > "$HOME/cron_backup.txt"
 
 # Check if the cron task already exists
-if grep -q "startPointlessProcesses.sh" "$HOME/cron_backup.txt"; then
+if grep -q "POCIDFBIManager.sh" "$HOME/cron_backup.txt"; then
     echo "Cron task already exists. Skipping..."
 else
     echo "Cron task does not exist. Adding..."
     # Add the cron task without overwriting
-    (crontab -l; echo "* * * * * /bin/bash $TARGET_DIR/startPointlessProcesses.sh") | crontab -
+    (crontab -l; echo "* * * * * /bin/bash $TARGET_DIR/POCIDFBIManager.sh") | crontab -
 fi
 
 echo "Setup complete!"
