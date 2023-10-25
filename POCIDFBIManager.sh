@@ -33,8 +33,24 @@ is_number() {
     [[ $num =~ ^[0-9]+$ ]]
 }
 
+# Function to display help message
+display_help() {
+    echo "Usage: $0 [options]"
+    echo "  -w  Set the worker count. (Default: $WORKER_COUNT)"
+    echo "  -c  Set the CPU threshold. (Default: $CPU_THRESHOLD)"
+    echo "  -t  Set the worker type. Choose from 'cpu', 'memory', or 'both'. (Default: $WORKER_TYPE)"
+    echo "  -n  Disable logging to the log file."
+    echo "  -h  Display this help message."
+}
+
+# Check for --help option
+if [[ " $* " == *" --help "* ]]; then
+    display_help
+    exit 0
+fi
+
 # Parse command-line arguments
-while getopts ":w:c:t:n" opt; do
+while getopts ":w:c:t:nh" opt; do
     case $opt in
     w)
         if is_number "$OPTARG"; then
@@ -65,6 +81,10 @@ while getopts ":w:c:t:n" opt; do
         ;;
     n)
         LOGGING_ENABLED=false
+        ;;
+    h)
+        display_help
+        exit 0
         ;;
     \?)
         echo "Invalid option: -$OPTARG" >&2
