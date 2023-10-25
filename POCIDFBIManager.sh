@@ -13,6 +13,7 @@ LOG_FILE="$LOG_DIR/POCIDFBITrack.log"
 # Default values
 WORKER_COUNT=5
 CPU_THRESHOLD=20
+WORKER_TYPE="cpu" # Possible values: "cpu", "memory", "both"
 
 # Configuration file path
 CONFIG_FILE="$SCRIPT_DIR/config.conf"
@@ -21,6 +22,7 @@ CONFIG_FILE="$SCRIPT_DIR/config.conf"
 if [ -f "$CONFIG_FILE" ]; then
     WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
     CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
+    WORKER_TYPE=$(grep "^WORKER_TYPE=" "$CONFIG_FILE" | cut -d'=' -f2)
 fi
 
 # Function to validate if the provided input is a number
@@ -31,7 +33,7 @@ is_number() {
 }
 
 # Parse command-line arguments
-while getopts ":w:c:" opt; do
+while getopts ":w:c:t:" opt; do
     case $opt in
     w)
         if is_number "$OPTARG"; then
@@ -48,6 +50,17 @@ while getopts ":w:c:" opt; do
             echo "Error: -c argument '$OPTARG' is not a valid number." >&2
             exit 1
         fi
+        ;;
+    t)
+        case $OPTARG in
+        cpu | memory | both)
+            WORKER_TYPE=$OPTARG
+            ;;
+        *)
+            echo "Error: -t argument '$OPTARG' is not a valid worker type. Choose from 'cpu', 'memory', or 'both'." >&2
+            exit 1
+            ;;
+        esac
         ;;
     \?)
         echo "Invalid option: -$OPTARG" >&2
@@ -130,6 +143,9 @@ cd "$SCRIPT_DIR" || exit
 # Log script startup
 log "Starting POCIDFBIManager.sh at $(date). Monitoring CPU Load..."
 
+# Log current configuration
+log "Script will trigger when CPU load is below $CPU_THRESHOLD% and will spawn $WORKER_COUNT instances of $WORKER_TYPE workers."
+
 # Main loop
 while true; do
     # Get current CPU load
@@ -138,16 +154,22 @@ while true; do
 
     # if CPU load is below X%, spawn Y instances of WasteCPUWorker.sh
     if [ "$currentCpuLoad" -le "$CPU_THRESHOLD" ]; then # Adjusted the threshold to 20% for some buffer
-        log "CPU Load below threshold at $(date). Spawning $WORKER_COUNT instances of WasteCPUWorker.sh."
+        log "CPU Load below threshold at $(date). Spawning $WORKER_COUNT instances of waste workers..."
 
-        # Spawn instances of WasteCPUWorker.sh concurrently
+        # Spawn instances of the specified worker(s) concurrently
         for _ in $(seq 1 "$WORKER_COUNT"); do
-            /bin/bash "$SCRIPT_DIR/workers/WasteCPUWorker.sh" &
+            if [ "$WORKER_TYPE" == "cpu" ] || [ "$WORKER_TYPE" == "both" ]; then
+                /bin/bash "$SCRIPT_DIR/workers/WasteCPUWorker.sh" &
+            fi
+
+            if [ "$WORKER_TYPE" == "memory" ] || [ "$WORKER_TYPE" == "both" ]; then
+                /bin/bash "$SCRIPT_DIR/workers/WasteMemoryWorker.sh" &
+            fi
         done
 
         wait # Wait for all spawned scripts to complete
 
-        log "Completed running WasteCPUWorker.sh instances at $(date)."
+        log "Completed running $WORKER_COUNT instances of waste workers at $(date)."
     else
         log "CPU Load is within acceptable range at $(date). No action taken."
     fi

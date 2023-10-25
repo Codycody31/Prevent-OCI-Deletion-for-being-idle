@@ -30,21 +30,21 @@ Before you set up and run the scripts, you may want to configure the worker coun
 
 ### 1. Command Line Interface (CLI)
 
-You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w` and `-c` options.
+You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w`, `-t` and `-c` options.
 
 ```bash
-./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD]
+./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -t [WORKER_TYPE]
 ```
 
-Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked.
+Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `[WORKER_TYPE]` can be either `cpu`, `memory`, or `both` to specify which worker script to use.
 
 **Example**:
 
 ```bash
-./POCIDFBIManager.sh -w 5 -c 20
+./POCIDFBIManager.sh -w 5 -c 20 -t cpu
 ```
 
-This command runs the manager script with a worker count of 5 and a CPU threshold of 20%.
+This command runs the manager script with a worker count of 5 and a CPU threshold of 20% (i.e., if CPU usage falls below 20%, the worker script will be invoked). The worker script used is `WasteCPUWorker.sh`. If you want to use the memory worker script, replace `cpu` with `memory`. If you want to use both worker scripts, replace `cpu` with `both`.
 
 ### 2. Configuration File (`config.conf`)
 
