@@ -24,6 +24,47 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 2. **POCIDFBIManager.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
 3. **cron instructions** - Guidelines to set up a scheduled task using crontab to automate the process.
 
+## Configuration
+
+Before you set up and run the scripts, you may want to configure the worker count and CPU threshold to fit your needs. There are two primary ways to configure these parameters:
+
+### 1. Command Line Interface (CLI)
+
+You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w` and `-c` options.
+
+```bash
+./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD]
+```
+
+Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked.
+
+**Example**:
+
+```bash
+./POCIDFBIManager.sh -w 5 -c 20
+```
+
+This command runs the manager script with a worker count of 5 and a CPU threshold of 20%.
+
+### 2. Configuration File (`config.conf`)
+
+Alternatively, you can use the provided `config.conf` file to set default values for the worker count and CPU threshold. This approach is beneficial if you don't want to provide these values every time you run the script.
+
+Open `config.conf` in your favorite text editor:
+
+```bash
+nano config.conf
+```
+
+And then set your desired values:
+
+```bash
+WORKER_COUNT=5
+CPU_THRESHOLD=20
+```
+
+Save the file and exit the editor. Now, when you run the manager script without CLI arguments, it will use these values from `config.conf`. An important thing to note, is that once the manager is started it will only grab the settings once. If you change the settings in `config.conf` you will need to restart the manager script.
+
 ## Setup & Usage
 
 1. Clone the repository:
