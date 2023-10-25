@@ -20,9 +20,9 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 
 ## Scripts Description
 
-1. **WasteCPUWorker.sh** - This is the CPU "waster" script, designed to produce computational work.
-2. **POCIDFBIManager.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
-3. **cron instructions** - Guidelines to set up a scheduled task using crontab to automate the process.
+1. **workers/WasteCPUWorker.sh** - This is the CPU "waster" script, designed to produce computational work.
+2. **workers/WasteMemoryWorker.sh** - This is the Memory "waster" script, meant to produce memory work.
+3. **POCIDFBIManager.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
 
 ## Configuration
 
