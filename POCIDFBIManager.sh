@@ -14,6 +14,7 @@ LOG_FILE="$LOG_DIR/POCIDFBITrack.log"
 WORKER_COUNT=5
 CPU_THRESHOLD=20
 WORKER_TYPE="cpu" # Possible values: "cpu", "memory", "both"
+LOGGING_ENABLED=true
 
 # Configuration file path
 CONFIG_FILE="$SCRIPT_DIR/config.conf"
@@ -33,7 +34,7 @@ is_number() {
 }
 
 # Parse command-line arguments
-while getopts ":w:c:t:" opt; do
+while getopts ":w:c:t:n" opt; do
     case $opt in
     w)
         if is_number "$OPTARG"; then
@@ -62,6 +63,9 @@ while getopts ":w:c:t:" opt; do
             ;;
         esac
         ;;
+    n)
+        LOGGING_ENABLED=false
+        ;;
     \?)
         echo "Invalid option: -$OPTARG" >&2
         exit 1
@@ -83,8 +87,11 @@ get_cpu_load() {
 
 # Function to log to the log file and to stdout
 log() {
-    echo "$1" >>"$LOG_FILE"
-    echo "$1"
+    local message="$1"
+    if [ "$LOGGING_ENABLED" = true ]; then
+        echo "$message" >>"$LOG_FILE"
+    fi
+    echo "$message"
 }
 
 # Function to clean up the log file
