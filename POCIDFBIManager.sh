@@ -95,7 +95,7 @@ cleanup_log() {
 # Function to cleanup when the script exits
 exit_handler() {
     # Kill all spawned waste workers
-    log "Killing all spawned WasteCPUWorker.sh instances..."
+    log "Killing all spawned waste workers..."
     # TODO: Might need to ensure the parent who spawned it is a POCIDFBIManager.sh instance
     pkill -f WasteCPUWorker.sh
     pkill -f WasteMemoryWorker.sh
