@@ -10,6 +10,56 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 LOG_DIR="$SCRIPT_DIR/log"
 LOG_FILE="$LOG_DIR/POCIDFBITrack.log"
 
+# Default values
+WORKER_COUNT=5
+CPU_THRESHOLD=20
+
+# Configuration file path
+CONFIG_FILE="$SCRIPT_DIR/config.conf"
+
+# Read from configuration file if it exists
+if [ -f "$CONFIG_FILE" ]; then
+    WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
+    CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
+fi
+
+# Function to validate if the provided input is a number
+is_number() {
+    local num="$1"
+    # Use regex to check if the input is a number
+    [[ $num =~ ^[0-9]+$ ]]
+}
+
+# Parse command-line arguments
+while getopts ":w:c:" opt; do
+    case $opt in
+    w)
+        if is_number "$OPTARG"; then
+            WORKER_COUNT=$OPTARG
+        else
+            echo "Error: -w argument '$OPTARG' is not a valid number." >&2
+            exit 1
+        fi
+        ;;
+    c)
+        if is_number "$OPTARG"; then
+            CPU_THRESHOLD=$OPTARG
+        else
+            echo "Error: -c argument '$OPTARG' is not a valid number." >&2
+            exit 1
+        fi
+        ;;
+    \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit 1
+        ;;
+    :)
+        echo "Option -$OPTARG requires an argument." >&2
+        exit 1
+        ;;
+    esac
+done
+
 # Ensure that the log directory exists
 mkdir -p "$SCRIPT_DIR/log"
 
@@ -86,12 +136,12 @@ while true; do
     currentCpuLoad=$(get_cpu_load)
     log "Current CPU Load at $(date): $currentCpuLoad%"
 
-    # if CPU load is below 20%, spawn 5 instances of WasteCPUWorker.sh
-    if [ "$currentCpuLoad" -le 20 ]; then # Adjusted the threshold to 20% for some buffer
-        log "CPU Load below threshold at $(date). Spawning 5 instances of WasteCPUWorker.sh."
+    # if CPU load is below X%, spawn Y instances of WasteCPUWorker.sh
+    if [ "$currentCpuLoad" -le "$CPU_THRESHOLD" ]; then # Adjusted the threshold to 20% for some buffer
+        log "CPU Load below threshold at $(date). Spawning $WORKER_COUNT instances of WasteCPUWorker.sh."
 
-        # Spawn 5 instances of WasteCPUWorker.sh concurrently
-        for _ in {1..5}; do
+        # Spawn instances of WasteCPUWorker.sh concurrently
+        for _ in $(seq 1 "$WORKER_COUNT"); do
             /bin/bash "$SCRIPT_DIR/workers/WasteCPUWorker.sh" &
         done
 
