@@ -127,7 +127,11 @@ tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/POCIDFBITrack.log
 
 The `WasteCPUWorker.sh` script is designed to generate computational work. The script produces random numbers and writes them to `/dev/null`, which means the numbers are discarded immediately. This activity creates a CPU workload without having any lasting effect on storage or other system resources.
 
-**2. Why Monitor with `POCIDFBIManager.sh`?**
+**2. Why use `WasteMemoryWorker.sh`?**
+
+The `WasteMemoryWorker.sh` script is designed to generate memory work. The script produces random numbers and stores them in memory via a variable. Unlike the CPU worker script, this script may have a lasting effect on the system's memory usage. You can still use this script, but you might want to monitor the memory usage to ensure it doesn't exceed your desired limits.
+
+**3. Why Monitor with `POCIDFBIManager.sh`?**
 
 Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `POCIDFBIManager.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `WasteCPUWorker.sh` script.
 
