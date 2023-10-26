@@ -30,13 +30,13 @@ Before you set up and run the scripts, you may want to configure the worker coun
 
 ### 1. Command Line Interface (CLI)
 
-You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w`, `-t` and `-c` options.
+You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w`, `-t`, `=n` and `-c` options.
 
 ```bash
-./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -t [WORKER_TYPE]
+./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -t [WORKER_TYPE] -n
 ```
 
-Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `[WORKER_TYPE]` can be either `cpu`, `memory`, or `both` to specify which worker script to use.
+Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `[WORKER_TYPE]` can be either `cpu`, `memory`, or `both` to specify which worker script to use. `-n` is a flag used to disable logging, when applied disables logging to a file.
 
 **Example**:
 
@@ -61,6 +61,8 @@ And then set your desired values:
 ```bash
 WORKER_COUNT=5
 CPU_THRESHOLD=20
+WORKER_TYPE=cpu
+LOGGING_ENABLED=true
 ```
 
 Save the file and exit the editor. Now, when you run the manager script without CLI arguments, it will use these values from `config.conf`. An important thing to note, is that once the manager is started it will only grab the settings once. If you change the settings in `config.conf` you will need to restart the manager script.
