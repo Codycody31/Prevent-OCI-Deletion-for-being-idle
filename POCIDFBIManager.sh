@@ -24,6 +24,7 @@ if [ -f "$CONFIG_FILE" ]; then
     WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
     CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
     WORKER_TYPE=$(grep "^WORKER_TYPE=" "$CONFIG_FILE" | cut -d'=' -f2)
+    LOGGING_ENABLED=$(grep "^LOGGING_ENABLED=" "$CONFIG_FILE" | cut -d'=' -f2)
 fi
 
 # Function to validate if the provided input is a number
