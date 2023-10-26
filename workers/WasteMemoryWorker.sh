@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# WARNING: This script should never be ran.
+
 x=0
 declare -A pointlessNumbersArray
 

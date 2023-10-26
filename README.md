@@ -21,8 +21,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 ## Scripts Description
 
 1. **workers/WasteCPUWorker.sh** - This is the CPU "waster" script, designed to produce computational work.
-2. **workers/WasteMemoryWorker.sh** - This is the Memory "waster" script, meant to produce memory work.
-3. **POCIDFBIManager.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
+2. **POCIDFBIManager.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
 
 ## Configuration
 
@@ -30,21 +29,21 @@ Before you set up and run the scripts, you may want to configure the worker coun
 
 ### 1. Command Line Interface (CLI)
 
-You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w`, `-t`, `=n` and `-c` options.
+You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w`, `-n` and `-c` options.
 
 ```bash
-./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -t [WORKER_TYPE] -n
+./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -n
 ```
 
-Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `[WORKER_TYPE]` can be either `cpu`, `memory`, or `both` to specify which worker script to use. `-n` is a flag used to disable logging, when applied disables logging to a file.
+Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `-n` is a flag used to disable logging, when applied disables logging to a file.
 
 **Example**:
 
 ```bash
-./POCIDFBIManager.sh -w 5 -c 20 -t cpu
+./POCIDFBIManager.sh -w 5 -c 20
 ```
 
-This command runs the manager script with a worker count of 5 and a CPU threshold of 20% (i.e., if CPU usage falls below 20%, the worker script will be invoked). The worker script used is `WasteCPUWorker.sh`. If you want to use the memory worker script, replace `cpu` with `memory`. If you want to use both worker scripts, replace `cpu` with `both`.
+This command runs the manager script with a worker count of 5 and a CPU threshold of 20% (i.e., if CPU usage falls below 20%, the worker script will be invoked). The worker script used is `WasteCPUWorker.sh`.
 
 ### 2. Configuration File (`config.conf`)
 
@@ -61,7 +60,6 @@ And then set your desired values:
 ```bash
 WORKER_COUNT=5
 CPU_THRESHOLD=20
-WORKER_TYPE=cpu
 LOGGING_ENABLED=true
 ```
 
@@ -129,11 +127,7 @@ tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/POCIDFBITrack.log
 
 The `WasteCPUWorker.sh` script is designed to generate computational work. The script produces random numbers and writes them to `/dev/null`, which means the numbers are discarded immediately. This activity creates a CPU workload without having any lasting effect on storage or other system resources.
 
-**2. Why use `WasteMemoryWorker.sh`?**
-
-The `WasteMemoryWorker.sh` script is designed to generate memory work. The script produces random numbers and stores them in memory via a variable. Unlike the CPU worker script, this script may have a lasting effect on the system's memory usage. You can still use this script, but you might want to monitor the memory usage to ensure it doesn't exceed your desired limits.
-
-**3. Why Monitor with `POCIDFBIManager.sh`?**
+**2. Why Monitor with `POCIDFBIManager.sh`?**
 
 Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `POCIDFBIManager.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `WasteCPUWorker.sh` script.
 

@@ -13,7 +13,6 @@ LOG_FILE="$LOG_DIR/POCIDFBITrack.log"
 # Default values
 WORKER_COUNT=5
 CPU_THRESHOLD=20
-WORKER_TYPE="cpu" # Possible values: "cpu", "memory", "both"
 LOGGING_ENABLED=true
 
 # Configuration file path
@@ -23,7 +22,6 @@ CONFIG_FILE="$SCRIPT_DIR/config.conf"
 if [ -f "$CONFIG_FILE" ]; then
     WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
     CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
-    WORKER_TYPE=$(grep "^WORKER_TYPE=" "$CONFIG_FILE" | cut -d'=' -f2)
     LOGGING_ENABLED=$(grep "^LOGGING_ENABLED=" "$CONFIG_FILE" | cut -d'=' -f2)
 fi
 
@@ -39,7 +37,6 @@ display_help() {
     echo "Usage: $0 [options]"
     echo "  -w  Set the worker count. (Default: $WORKER_COUNT)"
     echo "  -c  Set the CPU threshold. (Default: $CPU_THRESHOLD)"
-    echo "  -t  Set the worker type. Choose from 'cpu', 'memory', or 'both'. (Default: $WORKER_TYPE)"
     echo "  -n  Disable logging to the log file."
     echo "  -h  Display this help message."
 }
@@ -51,7 +48,7 @@ if [[ " $* " == *" --help "* ]]; then
 fi
 
 # Parse command-line arguments
-while getopts ":w:c:t:nh" opt; do
+while getopts ":w:c:nh" opt; do
     case $opt in
     w)
         if is_number "$OPTARG"; then
@@ -68,17 +65,6 @@ while getopts ":w:c:t:nh" opt; do
             echo "Error: -c argument '$OPTARG' is not a valid number." >&2
             exit 1
         fi
-        ;;
-    t)
-        case $OPTARG in
-        cpu | memory | both)
-            WORKER_TYPE=$OPTARG
-            ;;
-        *)
-            echo "Error: -t argument '$OPTARG' is not a valid worker type. Choose from 'cpu', 'memory', or 'both'." >&2
-            exit 1
-            ;;
-        esac
         ;;
     n)
         LOGGING_ENABLED=false
@@ -172,7 +158,7 @@ cd "$SCRIPT_DIR" || exit
 log "Starting POCIDFBIManager.sh at $(date). Monitoring CPU Load..."
 
 # Log current configuration
-log "Script will trigger when CPU load is below $CPU_THRESHOLD% and will spawn $WORKER_COUNT instances of $WORKER_TYPE workers."
+log "Script will trigger when CPU load is below $CPU_THRESHOLD% and will spawn $WORKER_COUNT instances of cpu workers."
 
 # Main loop
 while true; do
@@ -186,13 +172,7 @@ while true; do
 
         # Spawn instances of the specified worker(s) concurrently
         for _ in $(seq 1 "$WORKER_COUNT"); do
-            if [ "$WORKER_TYPE" == "cpu" ] || [ "$WORKER_TYPE" == "both" ]; then
-                /bin/bash "$SCRIPT_DIR/workers/WasteCPUWorker.sh" &
-            fi
-
-            if [ "$WORKER_TYPE" == "memory" ] || [ "$WORKER_TYPE" == "both" ]; then
-                /bin/bash "$SCRIPT_DIR/workers/WasteMemoryWorker.sh" &
-            fi
+            /bin/bash "$SCRIPT_DIR/workers/WasteCPUWorker.sh" &
         done
 
         wait # Wait for all spawned scripts to complete
