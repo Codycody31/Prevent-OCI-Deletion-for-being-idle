@@ -12,9 +12,9 @@ While the current repository contains modifications, optimizations, and extensio
 
 Oracle may delete your ForeverFree tier instance if, during a 7-day period, the following criteria are met:
 
-* CPU utilization for the 95th percentile is less than 10%.
-* Network utilization is less than 10%.
-* Memory utilization is less than 10% (applies to A1 shapes only).
+- CPU utilization for the 95th percentile is less than 10%.
+- Network utilization is less than 10%.
+- Memory utilization is less than 10% (applies to A1 shapes only).
 
 The purpose of these scripts is to ensure that the instance remains within Oracle's usage guidelines without manual intervention. While this approach is practical, it is crucial to understand the ethical and environmental implications of such a strategy. We encourage users to only deploy this solution if absolutely necessary.
 
@@ -135,7 +135,7 @@ Instead of blindly running the CPU waster script continuously, it's more efficie
 
 To control the CPU usage, you might want to adjust the manager script. Here's a breakdown of its logic and where you can make modifications:
 
-* **Threshold of Activation**:
+- **Threshold of Activation**:
   The line
 
   ```bash
@@ -144,7 +144,7 @@ To control the CPU usage, you might want to adjust the manager script. Here's a 
 
   determines when to activate the CPU waster script. Here, it activates if CPU load is less than or equal to 20%. If you wish to change this threshold, modify the number `20` to your desired value.
 
-* **Measuring CPU Load**:
+- **Measuring CPU Load**:
   The line
 
   ```bash
@@ -153,7 +153,7 @@ To control the CPU usage, you might want to adjust the manager script. Here's a 
 
   uses `vmstat` to get system statistics. The value derived represents the CPU idle time, which is then subtracted from 100 to get the actual CPU load. If you are familiar with other system monitoring tools or commands and wish to use them, you can replace this line with an appropriate command that returns the current CPU load.
 
-* **Logging Information**:
+- **Logging Information**:
   You can add more detailed logging by adding `log` commands to the script. For example, if you want to log the time when the script activates, you can add the following line:
 
   ```bash
@@ -224,7 +224,7 @@ After initiating the kill commands:
 
 Once you've ensured that the unwanted processes are terminated:
 
-* **Monitor the system's CPU usage** with tools such as `top` or `htop` to confirm that CPU utilization is back to normal.
+- **Monitor the system's CPU usage** with tools such as `top` or `htop` to confirm that CPU utilization is back to normal.
 
 > **Caution**: Always exercise caution when using the `kill` command, especially with the `-9` option. It forcibly terminates processes and can inadvertently affect essential system processes if misused.
 
@@ -236,15 +236,14 @@ If you are interested in adapting these scripts for other operating systems, dis
 
 ## Tips
 
-* If you are uncertain about the effect of changes you make, test them in a controlled environment before deploying them on your main instance.
-  
-* It's a good practice to keep an eye on the system's behavior after making adjustments to ensure it behaves as expected. Tools like `top` or `htop` can be valuable in real-time monitoring.
+- If you are uncertain about the effect of changes you make, test them in a controlled environment before deploying them on your main instance.
+- It's a good practice to keep an eye on the system's behavior after making adjustments to ensure it behaves as expected. Tools like `top` or `htop` can be valuable in real-time monitoring.
 
 ## Notes
 
-* Adjust the frequency in the crontab entry as per your requirements.
-* Monitor your instance's resource usage regularly to ensure it remains within desired parameters.
-* Understand that this approach, while effective, can be resource-intensive. Ensure you are within the ethical bounds of Oracle's policy and terms of service.
+- Adjust the frequency in the crontab entry as per your requirements.
+- Monitor your instance's resource usage regularly to ensure it remains within desired parameters.
+- Understand that this approach, while effective, can be resource-intensive. Ensure you are within the ethical bounds of Oracle's policy and terms of service.
 
 ## Disclaimer
 
