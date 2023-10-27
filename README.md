@@ -102,7 +102,7 @@ Save the file and exit the editor. Now, when you run the manager script without 
 For a quick and easy setup, you can run the following one-liner which fetches the `install.sh` script from the repository and executes it:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/stable/install.sh | bash
 ```
 
 Upon running the above command, the script will be set up to trigger every minute via `crontab`.
@@ -110,7 +110,7 @@ Upon running the above command, the script will be set up to trigger every minut
 If the above command fails, you can try the following:
 
 ```bash
-wget https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/install.sh && bash install.sh
+wget https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/stable/install.sh && bash install.sh
 ```
 
 ## Monitoring the Logs
