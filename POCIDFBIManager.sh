@@ -171,7 +171,7 @@ while true; do
         log "CPU Load below threshold at $(date). Spawning $WORKER_COUNT instances of waste workers..."
 
         # Spawn instances of the specified worker(s) concurrently
-        for _ in $(seq 1 "$WORKER_COUNT"); do
+        for _ in "$(seq 1 "$WORKER_COUNT")"; do
             /bin/bash "$SCRIPT_DIR/workers/WasteCPUWorker.sh" &
         done
 
