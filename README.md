@@ -32,18 +32,18 @@ Before you set up and run the scripts, you may want to configure the worker coun
 You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w`, `-n` and `-c` options.
 
 ```bash
-./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -n
+./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -n -d [DURATION_BETWEEN_CHECKS]
 ```
 
-Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `-n` is a flag used to disable logging, when applied disables logging to a file.
+Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `-n` is a flag used to disable logging, when applied disables logging to a file. `-d` is a flag used to set the duration between checks, the default is 10 seconds.
 
 **Example**:
 
 ```bash
-./POCIDFBIManager.sh -w 5 -c 20
+./POCIDFBIManager.sh -w 5 -c 20 -n -d 10
 ```
 
-This command runs the manager script with a worker count of 5 and a CPU threshold of 20% (i.e., if CPU usage falls below 20%, the worker script will be invoked). The worker script used is `WasteCPUWorker.sh`.
+This command runs the manager script with a worker count of 5 and a CPU threshold of 20% (i.e., if CPU usage falls below 20%, the worker script will be invoked). The worker script used is `WasteCPUWorker.sh`. The `-n` flag disables logging, and the `-d` flag sets the duration between checks to 10 seconds.
 
 ### 2. Configuration File (`config.conf`)
 
@@ -61,6 +61,7 @@ And then set your desired values:
 WORKER_COUNT=5
 CPU_THRESHOLD=20
 LOGGING_ENABLED=true
+DURATION_BETWEEN_CHECKS=10
 ```
 
 Save the file and exit the editor. Now, when you run the manager script without CLI arguments, it will use these values from `config.conf`. An important thing to note, is that once the manager is started it will only grab the settings once. If you change the settings in `config.conf` you will need to restart the manager script.
