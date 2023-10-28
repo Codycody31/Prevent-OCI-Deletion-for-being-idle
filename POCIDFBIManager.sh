@@ -14,6 +14,7 @@ LOG_FILE="$LOG_DIR/POCIDFBITrack.log"
 WORKER_COUNT=5
 CPU_THRESHOLD=20
 LOGGING_ENABLED=true
+DURATION_BETWEEN_CHECKS=10 # In seconds
 
 # Configuration file path
 CONFIG_FILE="$SCRIPT_DIR/config.conf"
@@ -23,6 +24,7 @@ if [ -f "$CONFIG_FILE" ]; then
     WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
     CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
     LOGGING_ENABLED=$(grep "^LOGGING_ENABLED=" "$CONFIG_FILE" | cut -d'=' -f2)
+    DURATION_BETWEEN_CHECKS=$(grep "^DURATION_BETWEEN_CHECKS=" "$CONFIG_FILE" | cut -d'=' -f2)
 fi
 
 # Function to validate if the provided input is a number
@@ -48,7 +50,7 @@ if [[ " $* " == *" --help "* ]]; then
 fi
 
 # Parse command-line arguments
-while getopts ":w:c:nh" opt; do
+while getopts ":w:c:d:nh" opt; do
     case $opt in
     w)
         if is_number "$OPTARG"; then
@@ -63,6 +65,14 @@ while getopts ":w:c:nh" opt; do
             CPU_THRESHOLD=$OPTARG
         else
             echo "Error: -c argument '$OPTARG' is not a valid number." >&2
+            exit 1
+        fi
+        ;;
+    d)
+        if is_number "$OPTARG"; then
+            DURATION_BETWEEN_CHECKS=$OPTARG
+        else
+            echo "Error: -d argument '$OPTARG' is not a valid number." >&2
             exit 1
         fi
         ;;
@@ -187,5 +197,5 @@ while true; do
         cleanup_log
     fi
 
-    sleep 10 # 10-second delay between checks
+    sleep "$DURATION_BETWEEN_CHECKS"
 done
