@@ -2,6 +2,18 @@
 
 The `Prevent-OCI-Deletion-for-being-idle` repository has been designed to help users maintain their Oracle Cloud Infrastructure (OCI) ForeverFree tier instances active, following Oracle's policy that could lead to the deletion of instances under certain conditions.
 
+<div align="center">
+
+<!-- Version -->
+[![Version](https://img.shields.io/github/v/release/Codycody31/Prevent-OCI-Deletion-for-being-idle?style=for-the-badge)](https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/releases/)
+
+<!-- Discord -->
+[![Discord](https://img.shields.io/discord/1166016207816757248?color=7289da&label=Discord&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/HRNVF5Tf9a)
+
+<!-- License -->
+[![License](https://img.shields.io/github/license/Codycody31/Prevent-OCI-Deletion-for-being-idle?style=for-the-badge)](LICENSE)
+</div>
+
 ## Acknowledgment
 
 This project has been improved upon and expanded from the original work found at [OCIScripts by Drag-NDrop](https://github.com/Drag-NDrop/OCIScripts). We express our gratitude to the original author for their initiative and groundwork.
@@ -106,20 +118,10 @@ For a quick and easy setup, you can run the following one-liner which fetches th
 curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/stable/install.sh | bash
 ```
 
-Upon running the above command, the script will be set up to trigger every minute via `crontab`.
-
-If the above command fails, you can try the following:
+Upon running the above command, the script will be set up to trigger every minute via `crontab`. You can verify this by running `crontab -l` and checking for the following line:
 
 ```bash
-wget https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/stable/install.sh && bash install.sh
-```
-
-## Monitoring the Logs
-
-To keep an eye on the script's activities, you can monitor the log file:
-
-```bash
-tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/POCIDFBITrack.log
+* * * * * /bin/bash  $HOME/Prevent-OCI-Deletion-for-being-idle/POCIDFBIManager.sh
 ```
 
 ## Why and How of the Script Strategy
@@ -130,7 +132,7 @@ The `WasteCPUWorker.sh` script is designed to generate computational work. The s
 
 **2. Why Monitor with `POCIDFBIManager.sh`?**
 
-Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `POCIDFBIManager.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `WasteCPUWorker.sh` script.
+Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `POCIDFBIManager.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the waste worker scripts.
 
 ## Modifying the Manager Script
 
@@ -140,10 +142,10 @@ To control the CPU usage, you might want to adjust the manager script. Here's a 
   The line
 
   ```bash
-  if [ $currentCpuLoad -le 20 ]
+  if [ "$currentCpuLoad" -le "$CPU_THRESHOLD" ]
   ```
 
-  determines when to activate the CPU waster script. Here, it activates if CPU load is less than or equal to 20%. If you wish to change this threshold, modify the number `20` to your desired value.
+  determines when to activate the CPU waster script. Here, it activates if CPU load is less than or equal to 20% (the default value). You can change this value to suit your needs. Via the CLI, you can use the `-c` option to set this value. If you are using the configuration file, you can set the `CPU_THRESHOLD` variable to your desired value.
 
 * **Measuring CPU Load**:
   The line
