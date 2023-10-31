@@ -1,18 +1,14 @@
 # Prevent OCI Deletion for being idle
 
-The `Prevent-OCI-Deletion-for-being-idle` repository has been designed to help users maintain their Oracle Cloud Infrastructure (OCI) ForeverFree tier instances active, following Oracle's policy that could lead to the deletion of instances under certain conditions.
-
 <div align="center">
 
-<!-- Version -->
-[![Version](https://img.shields.io/github/v/release/Codycody31/Prevent-OCI-Deletion-for-being-idle?style=for-the-badge)](https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/releases/)
+[![Version](https://img.shields.io/github/v/release/Codycody31/Prevent-OCI-Deletion-for-being-idle)](https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/releases/)
+[![Discord](https://img.shields.io/discord/1166016207816757248?color=7289da&label=Discord&logo=discord&logoColor=white)](https://discord.gg/HRNVF5Tf9a)
+[![License](https://img.shields.io/github/license/Codycody31/Prevent-OCI-Deletion-for-being-idle)](LICENSE)
 
-<!-- Discord -->
-[![Discord](https://img.shields.io/discord/1166016207816757248?color=7289da&label=Discord&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/HRNVF5Tf9a)
-
-<!-- License -->
-[![License](https://img.shields.io/github/license/Codycody31/Prevent-OCI-Deletion-for-being-idle?style=for-the-badge)](LICENSE)
 </div>
+
+The `Prevent-OCI-Deletion-for-being-idle` repository has been designed to help users maintain their Oracle Cloud Infrastructure (OCI) ForeverFree tier instances active, following Oracle's policy that could lead to the deletion of instances under certain conditions.
 
 ## Acknowledgment
 
