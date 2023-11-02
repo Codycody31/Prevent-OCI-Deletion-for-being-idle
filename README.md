@@ -1,5 +1,13 @@
 # Prevent OCI Deletion for being idle
 
+<div align="center">
+
+[![Version](https://img.shields.io/github/v/release/Codycody31/Prevent-OCI-Deletion-for-being-idle)](https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/releases/)
+[![Discord](https://img.shields.io/discord/1166016207816757248?color=7289da&label=Discord&logo=discord&logoColor=white)](https://discord.gg/HRNVF5Tf9a)
+[![License](https://img.shields.io/github/license/Codycody31/Prevent-OCI-Deletion-for-being-idle)](LICENSE)
+
+</div>
+
 The `Prevent-OCI-Deletion-for-being-idle` repository has been designed to help users maintain their Oracle Cloud Infrastructure (OCI) ForeverFree tier instances active, following Oracle's policy that could lead to the deletion of instances under certain conditions.
 
 ## Acknowledgment
@@ -32,18 +40,18 @@ Before you set up and run the scripts, you may want to configure the worker coun
 You can directly pass these values when running the manager script (`POCIDFBIManager.sh`) using the `-w`, `-n` and `-c` options.
 
 ```bash
-./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -n
+./POCIDFBIManager.sh -w [WORKER_COUNT] -c [CPU_THRESHOLD] -n -d [DURATION_BETWEEN_CHECKS]
 ```
 
-Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `-n` is a flag used to disable logging, when applied disables logging to a file.
+Replace `[WORKER_COUNT]` with the desired number of worker instances and `[CPU_THRESHOLD]` with the desired CPU usage threshold (as a percentage) below which the worker script should be invoked. `-n` is a flag used to disable logging, when applied disables logging to a file. `-d` is a flag used to set the duration between checks, the default is 10 seconds.
 
 **Example**:
 
 ```bash
-./POCIDFBIManager.sh -w 5 -c 20
+./POCIDFBIManager.sh -w 5 -c 20 -n -d 10
 ```
 
-This command runs the manager script with a worker count of 5 and a CPU threshold of 20% (i.e., if CPU usage falls below 20%, the worker script will be invoked). The worker script used is `WasteCPUWorker.sh`.
+This command runs the manager script with a worker count of 5 and a CPU threshold of 20% (i.e., if CPU usage falls below 20%, the worker script will be invoked). The worker script used is `WasteCPUWorker.sh`. The `-n` flag disables logging, and the `-d` flag sets the duration between checks to 10 seconds.
 
 ### 2. Configuration File (`config.conf`)
 
@@ -61,6 +69,7 @@ And then set your desired values:
 WORKER_COUNT=5
 CPU_THRESHOLD=20
 LOGGING_ENABLED=true
+DURATION_BETWEEN_CHECKS=10
 ```
 
 Save the file and exit the editor. Now, when you run the manager script without CLI arguments, it will use these values from `config.conf`. An important thing to note, is that once the manager is started it will only grab the settings once. If you change the settings in `config.conf` you will need to restart the manager script.
@@ -102,23 +111,13 @@ Save the file and exit the editor. Now, when you run the manager script without 
 For a quick and easy setup, you can run the following one-liner which fetches the `install.sh` script from the repository and executes it:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/stable/install.sh | bash
 ```
 
-Upon running the above command, the script will be set up to trigger every minute via `crontab`.
-
-If the above command fails, you can try the following:
+Upon running the above command, the script will be set up to trigger every minute via `crontab`. You can verify this by running `crontab -l` and checking for the following line:
 
 ```bash
-wget https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/install.sh && bash install.sh
-```
-
-## Monitoring the Logs
-
-To keep an eye on the script's activities, you can monitor the log file:
-
-```bash
-tail -f $HOME/Prevent-OCI-Deletion-for-being-idle/log/POCIDFBITrack.log
+* * * * * /bin/bash  $HOME/Prevent-OCI-Deletion-for-being-idle/POCIDFBIManager.sh
 ```
 
 ## Why and How of the Script Strategy
@@ -129,7 +128,7 @@ The `WasteCPUWorker.sh` script is designed to generate computational work. The s
 
 **2. Why Monitor with `POCIDFBIManager.sh`?**
 
-Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `POCIDFBIManager.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the `WasteCPUWorker.sh` script.
+Instead of blindly running the CPU waster script continuously, it's more efficient to monitor the system and only generate extra CPU work when it's needed. The `POCIDFBIManager.sh` script acts as a manager, checking the current CPU workload and deciding whether to activate the waste worker scripts.
 
 ## Modifying the Manager Script
 
@@ -139,10 +138,10 @@ To control the CPU usage, you might want to adjust the manager script. Here's a 
   The line
 
   ```bash
-  if [ $currentCpuLoad -le 20 ]
+  if [ "$currentCpuLoad" -le "$CPU_THRESHOLD" ]
   ```
 
-  determines when to activate the CPU waster script. Here, it activates if CPU load is less than or equal to 20%. If you wish to change this threshold, modify the number `20` to your desired value.
+  determines when to activate the CPU waster script. Here, it activates if CPU load is less than or equal to 20% (the default value). You can change this value to suit your needs. Via the CLI, you can use the `-c` option to set this value. If you are using the configuration file, you can set the `CPU_THRESHOLD` variable to your desired value.
 
 * **Measuring CPU Load**:
   The line
