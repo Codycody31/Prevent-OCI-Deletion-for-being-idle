@@ -18,7 +18,7 @@ fi
 
 # Parse CLI arguments
 while getopts ":nh" opt; do
-    case ${opt} in
+    case $opt in
     n) # process option n
         SETUP_CRON=false
         ;;
@@ -75,7 +75,7 @@ REPO_ZIP_URL="https://github.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/
 
 # Fetch and unzip the repo
 echo "Fetching and unzipping the repo..."
-wget $REPO_ZIP_URL -O "$HOME/POCIDFBI.zip"
+wget "$REPO_ZIP_URL" -O "$HOME/POCIDFBI.zip"
 unzip "$HOME/POCIDFBI.zip" -d "$HOME/"
 
 echo "Moving the repo to $TARGET_DIR..."
@@ -93,7 +93,7 @@ mv "$HOME"/Prevent-OCI-Deletion-for-being-idle-stable/* "$TARGET_DIR"
 rm -f -r "$HOME/POCIDFBI.zip" "$HOME/Prevent-OCI-Deletion-for-being-idle-stable"
 
 # Set up cron only if SETUP_CRON is true
-if $SETUP_CRON; then
+if "$SETUP_CRON"; then
     # Backup the crontab first
     crontab -l >"$HOME/cron_backup.txt"
 
