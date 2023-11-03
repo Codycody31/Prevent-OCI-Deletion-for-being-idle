@@ -86,6 +86,8 @@ fi
     echo "DURATION_BETWEEN_CHECKS=$DURATION_BETWEEN_CHECKS"
 } >"$CONFIG_FILE"
 
+echo -e "================================================="
+
 # Display the new configuration
 printf "\n"
 echo -e "Updated Configuration:"
@@ -102,6 +104,7 @@ printf "\n\n"
 
 # Terminate running instances of POCIDFBIManager.sh
 echo "Terminating all running instances of POCIDFBIManager.sh..."
+printf "\n"
 pkill -f POCIDFBIManager.sh
 
 # Completion message with a border for visual appeal
