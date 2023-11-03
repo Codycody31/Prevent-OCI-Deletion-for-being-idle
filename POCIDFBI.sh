@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# Stylish banner for welcome message
+# Display a welcome message with a border for visual appeal
+printf "\n"
+echo -e "================================================="
+echo "     Welcome to the POCIDFBI Configuration Script     "
 echo "================================================="
-echo "   Welcome to the POCIDFBI Configuration Script  "
-echo "================================================="
+printf "\n"
 
 # Get the directory of the script itself
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
@@ -28,7 +30,7 @@ is_number() {
     [[ $num =~ ^[0-9]+$ ]]
 }
 
-# Read from the configuration file if it exists
+# Attempt to read the existing configuration file
 if [ -f "$CONFIG_FILE" ]; then
     WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
     CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
@@ -36,15 +38,19 @@ if [ -f "$CONFIG_FILE" ]; then
     DURATION_BETWEEN_CHECKS=$(grep "^DURATION_BETWEEN_CHECKS=" "$CONFIG_FILE" | cut -d'=' -f2)
 fi
 
-echo "Current Configuration:"
-echo "Worker Count: $WORKER_COUNT"
-echo "CPU Threshold: $CPU_THRESHOLD"
-echo "Logging: $([[ $LOGGING_ENABLED == true ]] && echo "Enabled" || echo "Disabled")"
-echo "Duration Between Checks: ${DURATION_BETWEEN_CHECKS}s"
+# Display the current configuration
+echo -e "Current Configuration:"
+printf "\n"
+echo "  Worker Count: $WORKER_COUNT"
+echo "  CPU Threshold: $CPU_THRESHOLD"
+echo "  Logging: $([[ $LOGGING_ENABLED == true ]] && echo "Enabled" || echo "Disabled")"
+echo "  Duration Between Checks: ${DURATION_BETWEEN_CHECKS}s"
+printf "\n"
 echo "-------------------------------------------------"
+printf "\n"
 
 # Prompt user for new configurations
-echo "Please enter new values or press ENTER to keep current settings."
+echo "Please enter new values or press ENTER to keep the current settings."
 
 # Worker count
 read -rp "Worker Count [$WORKER_COUNT]: " input
@@ -81,18 +87,25 @@ fi
 } >"$CONFIG_FILE"
 
 # Display the new configuration
-echo "Updated Configuration:"
-echo "Worker Count: $WORKER_COUNT"
-echo "CPU Threshold: $CPU_THRESHOLD"
-echo "Logging: $([[ $LOGGING_ENABLED == true ]] && echo "Enabled" || echo "Disabled")"
-echo "Duration Between Checks: ${DURATION_BETWEEN_CHECKS}s"
+printf "\n"
+echo -e "Updated Configuration:"
+printf "\n"
+echo "  Worker Count: $WORKER_COUNT"
+echo "  CPU Threshold: $CPU_THRESHOLD"
+echo "  Logging: $([[ $LOGGING_ENABLED == true ]] && echo "Enabled" || echo "Disabled")"
+echo "  Duration Between Checks: ${DURATION_BETWEEN_CHECKS}s"
+printf "\n"
 echo "-------------------------------------------------"
+printf "\n"
+echo "Configuration saved to $CONFIG_FILE"
+printf "\n\n"
 
 # Terminate running instances of POCIDFBIManager.sh
 echo "Terminating all running instances of POCIDFBIManager.sh..."
 pkill -f POCIDFBIManager.sh
 
-# Stylish banner for completion message
+# Completion message with a border for visual appeal
+echo -e "================================================="
+echo "     Configuration Complete! Exiting now.         "
 echo "================================================="
-echo "    Configuration Complete! Exiting now.         "
-echo "================================================="
+printf "\n"
