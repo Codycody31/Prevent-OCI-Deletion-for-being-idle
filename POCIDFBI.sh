@@ -25,17 +25,17 @@ CONFIG_FILE="$SCRIPT_DIR/config.conf"
 
 # Function to check if input is a number
 is_number() {
-    local num="$1"
-    # Use regex to check if input is a number
-    [[ $num =~ ^[0-9]+$ ]]
+  local num="$1"
+  # Use regex to check if input is a number
+  [[ $num =~ ^[0-9]+$ ]]
 }
 
 # Attempt to read the existing configuration file
 if [ -f "$CONFIG_FILE" ]; then
-    WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
-    CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
-    LOGGING_ENABLED=$(grep "^LOGGING_ENABLED=" "$CONFIG_FILE" | cut -d'=' -f2)
-    DURATION_BETWEEN_CHECKS=$(grep "^DURATION_BETWEEN_CHECKS=" "$CONFIG_FILE" | cut -d'=' -f2)
+  WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
+  CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
+  LOGGING_ENABLED=$(grep "^LOGGING_ENABLED=" "$CONFIG_FILE" | cut -d'=' -f2)
+  DURATION_BETWEEN_CHECKS=$(grep "^DURATION_BETWEEN_CHECKS=" "$CONFIG_FILE" | cut -d'=' -f2)
 fi
 
 # Display the current configuration
@@ -55,35 +55,35 @@ echo "Please enter new values or press ENTER to keep the current settings."
 # Worker count
 read -rp "Worker Count [$WORKER_COUNT]: " input
 if is_number "$input"; then
-    WORKER_COUNT=$input
+  WORKER_COUNT=$input
 fi
 
 # CPU threshold
 read -rp "CPU Threshold [$CPU_THRESHOLD]: " input
 if is_number "$input"; then
-    CPU_THRESHOLD=$input
+  CPU_THRESHOLD=$input
 fi
 
 # Logging option
 read -rp "Enable Logging? [$([[ $LOGGING_ENABLED == true ]] && echo "Y/n" || echo "y/N")]: " input
 if [[ $input =~ ^[Yy]$ ]]; then
-    LOGGING_ENABLED=true
+  LOGGING_ENABLED=true
 elif [[ $input =~ ^[Nn]$ ]]; then
-    LOGGING_ENABLED=false
+  LOGGING_ENABLED=false
 fi
 
 # Duration between checks
 read -rp "Duration Between Checks (in seconds) [$DURATION_BETWEEN_CHECKS]: " input
 if is_number "$input"; then
-    DURATION_BETWEEN_CHECKS=$input
+  DURATION_BETWEEN_CHECKS=$input
 fi
 
 # Write new configuration to file
 {
-    echo "WORKER_COUNT=$WORKER_COUNT"
-    echo "CPU_THRESHOLD=$CPU_THRESHOLD"
-    echo "LOGGING_ENABLED=$LOGGING_ENABLED"
-    echo "DURATION_BETWEEN_CHECKS=$DURATION_BETWEEN_CHECKS"
+  echo "WORKER_COUNT=$WORKER_COUNT"
+  echo "CPU_THRESHOLD=$CPU_THRESHOLD"
+  echo "LOGGING_ENABLED=$LOGGING_ENABLED"
+  echo "DURATION_BETWEEN_CHECKS=$DURATION_BETWEEN_CHECKS"
 } >"$CONFIG_FILE"
 
 echo -e "================================================="
