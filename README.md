@@ -124,7 +124,7 @@ Once you have set your desired values, the script will create/update the `config
 For a quick and easy setup, you can run the following one-liner which fetches the `install.sh` script from the repository and executes it:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/stable/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Codycody31/Prevent-OCI-Deletion-for-being-idle/master/install.sh | bash
 ```
 
 Upon running the above command, the script will be set up to trigger every minute via `crontab`. You can verify this by running `crontab -l` and checking for the following line:
