@@ -74,6 +74,18 @@ DURATION_BETWEEN_CHECKS=10
 
 Save the file and exit the editor. Now, when you run the manager script without CLI arguments, it will use these values from `config.conf`. An important thing to note, is that once the manager is started it will only grab the settings once. If you change the settings in `config.conf` you will need to restart the manager script.
 
+### 3. Configuration Script (`POCIDFBI.sh`)
+
+You can also use the provided `POCIDFBI.sh` script to set default values for the worker count and CPU threshold. This approach is beneficial if you don't want to provide these values every time you run the script.
+
+All you need to do is run the script and follow the prompts:
+
+```bash
+./POCIDFBI.sh
+```
+
+Once you have set your desired values, the script will create/update the `config.conf` file and set the values for you. An important thing to note, this script will terminate the manager script if it is running. You will need to restart the manager script after running this script if it wasn't being spawned by `crontab`.
+
 ## Setup & Usage
 
 1. Clone the repository:
