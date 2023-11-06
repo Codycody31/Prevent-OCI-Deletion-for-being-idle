@@ -30,6 +30,7 @@ The purpose of these scripts is to ensure that the instance remains within Oracl
 
 1. **workers/WasteCPUWorker.sh** - This is the CPU "waster" script, designed to produce computational work.
 2. **POCIDFBIManager.sh** - This script acts as the "manager". It monitors the CPU usage and spawns instances of `WasteCPUWorker.sh` if the usage falls below a certain threshold.
+3. **POCIDFBI.sh** - This script is used to configure the manager script. It will prompt you for the desired worker count and CPU threshold, and then update the `config.conf` file with the values.
 
 ## Configuration
 
