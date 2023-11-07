@@ -20,7 +20,6 @@ DURATION_BETWEEN_CHECKS=10 # In seconds
 CONFIG_FILE="$SCRIPT_DIR/config.conf"
 
 # Read from configuration file if it exists
-# Improved Configuration file parsing
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
 fi
