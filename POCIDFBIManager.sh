@@ -20,11 +20,9 @@ DURATION_BETWEEN_CHECKS=10 # In seconds
 CONFIG_FILE="$SCRIPT_DIR/config.conf"
 
 # Read from configuration file if it exists
+# Improved Configuration file parsing
 if [ -f "$CONFIG_FILE" ]; then
-    WORKER_COUNT=$(grep "^WORKER_COUNT=" "$CONFIG_FILE" | cut -d'=' -f2)
-    CPU_THRESHOLD=$(grep "^CPU_THRESHOLD=" "$CONFIG_FILE" | cut -d'=' -f2)
-    LOGGING_ENABLED=$(grep "^LOGGING_ENABLED=" "$CONFIG_FILE" | cut -d'=' -f2)
-    DURATION_BETWEEN_CHECKS=$(grep "^DURATION_BETWEEN_CHECKS=" "$CONFIG_FILE" | cut -d'=' -f2)
+    source "$CONFIG_FILE"
 fi
 
 # Function to validate if the provided input is a number
@@ -105,10 +103,13 @@ get_cpu_load() {
 # Function to log to the log file and to stdout
 log() {
     local message="$1"
+    local timestamp="$(date +"%Y-%m-%d %H:%M:%S")"
+    local formatted_message="[$timestamp] $message"
     if [ "$LOGGING_ENABLED" = true ]; then
-        echo "$message" >>"$LOG_FILE"
+        echo "$formatted_message" | tee -a "$LOG_FILE"
+    else
+        echo "$formatted_message"
     fi
-    echo "$message"
 }
 
 # Function to clean up the log file
