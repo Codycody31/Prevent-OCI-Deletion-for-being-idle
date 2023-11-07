@@ -42,8 +42,9 @@ TARGET_DIR="$HOME/Prevent-OCI-Deletion-for-being-idle"
 # Check if the repository already exists
 if [ -d "$TARGET_DIR" ]; then
     echo "It seems the repository is already installed at $TARGET_DIR."
-    read -p -r "Do you want to update it to the latest version? (y/n): " decision
 
+    # Ask user if they want to update the repo
+    read -rp "Do you want to update it to the latest version? (y/n): " decision
     if [[ $decision == "n" ]]; then
         echo "Exiting setup..."
         exit 1
