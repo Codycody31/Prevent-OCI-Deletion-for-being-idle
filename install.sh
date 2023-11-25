@@ -2,12 +2,38 @@
 
 # Initialize flag for cron setup to true (meaning by default cron will be set up)
 SETUP_CRON=true
+TARGET_DIR="$HOME/Prevent-OCI-Deletion-for-being-idle" # Default installation directory
 
 # Function to display help message
 display_help() {
     echo "Usage: $0 [options]"
     echo "  -n  Disable cron setup."
     echo "  -h  Display this help message."
+}
+
+# Function to check and install necessary commands
+check_and_install_command() {
+    local cmd=$1
+    local package=$2
+    if ! [ -x "$(command -v $cmd)" ]; then
+        echo "$cmd is not installed. Installing..."
+        install_package $package
+    else
+        echo "$cmd is already installed."
+    fi
+}
+
+# Function to detect and use system's package manager
+install_package() {
+    local package=$1
+    if [ -x "$(command -v apt-get)" ]; then
+        sudo apt-get install $package
+    elif [ -x "$(command -v yum)" ]; then
+        sudo yum install $package
+    else
+        echo "No known package manager found. Install $package manually."
+        exit 1
+    fi
 }
 
 # Check for --help option
@@ -17,10 +43,13 @@ if [[ " $* " == *" --help "* ]]; then
 fi
 
 # Parse CLI arguments
-while getopts ":nh" opt; do
+while getopts ":nd:h" opt; do
     case ${opt} in
     n) # process option n
         SETUP_CRON=false
+        ;;
+    d)
+        TARGET_DIR=$OPTARG
         ;;
     h) # process option h
         display_help
@@ -35,9 +64,6 @@ done
 
 # Welcome message
 echo "Welcome to the setup script for Prevent-OCI-Deletion-for-being-idle!"
-
-# Define the directory where we want the repo to reside
-TARGET_DIR="$HOME/Prevent-OCI-Deletion-for-being-idle"
 
 # Check if the repository already exists
 if [ -d "$TARGET_DIR" ]; then
@@ -57,14 +83,8 @@ fi
 
 # Ensure that wget and unzip are installed
 echo "Checking if wget and unzip are installed..."
-if ! [ -x "$(command -v wget)" ]; then
-    echo "wget is not installed. Installing..."
-    sudo apt-get install wget
-fi
-if ! [ -x "$(command -v unzip)" ]; then
-    echo "unzip is not installed. Installing..."
-    sudo apt-get install unzip
-fi
+check_and_install_command "wget" "wget"
+check_and_install_command "unzip" "unzip"
 
 # Ensure that the log directory exists
 echo "Checking if the log directory exists..."
@@ -99,7 +119,10 @@ rm -f -r "$HOME/POCIDFBI.zip" "$HOME/Prevent-OCI-Deletion-for-being-idle-master"
 
 # Make POCIDFBI.sh executable and add it to PATH
 chmod +x "$TARGET_DIR/POCIDFBI.sh"
-sudo ln -s "$TARGET_DIR/POCIDFBI.sh" /usr/local/bin/POCIDFBI
+# If it is not already in bin, add it
+if ! [ -x "$(command -v POCIDFBI)" ]; then
+    sudo ln -s "$TARGET_DIR/POCIDFBI.sh" /usr/local/bin/POCIDFBI
+fi
 echo "POCIDFBI.sh is now executable and can be run from anywhere using the command POCIDFBI."
 
 # Set up cron only if SETUP_CRON is true
