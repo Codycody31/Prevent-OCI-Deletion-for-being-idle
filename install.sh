@@ -49,6 +49,10 @@ if [ -d "$TARGET_DIR" ]; then
         echo "Exiting setup..."
         exit 1
     fi
+
+    # Delete the old repo
+    echo "Deleting the old repo..."
+    rm -f -r "$TARGET_DIR"
 fi
 
 # Ensure that wget and unzip are installed
@@ -92,6 +96,11 @@ mv "$HOME"/Prevent-OCI-Deletion-for-being-idle-master/* "$TARGET_DIR"
 
 # Clean up files
 rm -f -r "$HOME/POCIDFBI.zip" "$HOME/Prevent-OCI-Deletion-for-being-idle-master"
+
+# Make POCIDFBI.sh executable and add it to PATH
+chmod +x "$TARGET_DIR/POCIDFBI.sh"
+sudo ln -s "$TARGET_DIR/POCIDFBI.sh" /usr/local/bin/POCIDFBI
+echo "POCIDFBI.sh is now executable and can be run from anywhere using the command POCIDFBI."
 
 # Set up cron only if SETUP_CRON is true
 if $SETUP_CRON; then
