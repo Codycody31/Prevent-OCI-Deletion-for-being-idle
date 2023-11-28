@@ -20,11 +20,11 @@ While the current repository contains modifications, optimizations, and extensio
 
 Oracle may delete your ForeverFree tier instance if, during a 7-day period, the following criteria are met:
 
-* CPU utilization for the 95th percentile is less than 10%.
-* Network utilization is less than 10%.
-* Memory utilization is less than 10% (applies to A1 shapes only).
+* CPU utilization for the 95th percentile is less than 20%.
+* Network utilization is less than 20%.
+* Memory utilization is less than 20% (applies to [A1 shapes](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm#Details_of_the_Always_Free_Compute_instance__a1_flex) only).
 
-The purpose of these scripts is to ensure that the instance remains within Oracle's usage guidelines without manual intervention. While this approach is practical, it is crucial to understand the ethical and environmental implications of such a strategy. We encourage users to only deploy this solution if absolutely necessary.
+The purpose of these scripts is to ensure that the instance remains within Oracle's usage guidelines without manual intervention. While this approach is practical, it is crucial to understand the ethical and environmental implications of such a strategy. We encourage users to only deploy this solution if absolutely necessary. Please make sure to check the [Oracle Cloud Always Free Resources](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm#compute__idleinstances) page for the latest information on the ForeverFree tier policy.
 
 ## Scripts Description
 
